@@ -2,7 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
+
+app.set('server', {
+    maxHeaderSize: 100 * 1024, // 16KB, adjust as needed
+  });
 const PORT = 3000;
+
+
+
 
 app.use(bodyParser.json());
 

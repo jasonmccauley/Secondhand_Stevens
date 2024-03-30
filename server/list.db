@@ -1,3 +1,2 @@
-{"nameList":"tennis racket","description":"this is a racket","list_of_photos":"photo a, photo b","type_of_item":"sports","userList":"danny","sell_or_donate":"donating","organization":"alpha beta charlie","_id":"J88loOK2V9GRvgIn"}
-{"nameList":"tennis racket","description":"this is a racket","list_of_photos":"photo a, photo b","type_of_item":"sports","userList":"danny","sell_or_donate":"donating","organization":"alpha beta charlie","_id":"dzqDPW1UWk5q5MVh"}
-{"nameList":"a","description":"b","list_of_photos":"c","type_of_item":"d","userList":"e","sell_or_donate":"f","organization":"g","_id":"dX1lPaqVynIvhPFX"}
+{"nameList":"Racket","description":"This is a tennis racket","list_of_photos":"a,b,c","type_of_item":"sports","userList":"bob","sell_or_donate":"donating","organization":"alpha","_id":"OpJXUKYFnNPiIzNp"}
+{"nameList":"phone","description":"this is a phone","list_of_photos":"a,b,c,d","type_of_item":"electtronics","userList":"bob","sell_or_donate":"selling","organization":"beta","_id":"oRUTt0vOim5NLJYv"}
