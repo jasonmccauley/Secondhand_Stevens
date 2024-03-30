@@ -1,0 +1,54 @@
+.landing-container {
+  padding: 20px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: maroon; /* Color scheme */
+  padding: 10px 20px;
+}
+
+.nav-header {
+  font-size: 1.5rem;
+  color: white; /* Color scheme */
+}
+
+.nav-links {
+  font-size: 1rem;
+}
+
+.logout-btn {
+  background-color: transparent;
+  border: none;
+  color: white; /* Color scheme */
+  cursor: pointer;
+}
+
+.content {
+  margin-top: 20px;
+}
+
+.title {
+  font-size: 1.5rem;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center; /* Center align buttons */
+  margin-top: 20px;
+}
+
+.action-button {
+  padding: 15px 30px; /* Increase padding for bigger buttons */
+  background-color: maroon; /* Color scheme */
+  color: white; /* Color scheme */
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 0 10px; /* Add some margin between buttons */
+}
+
+.action-button:hover {
+  background-color: #800000; /* Darker shade of maroon on hover */
+}
