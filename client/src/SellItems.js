@@ -18,10 +18,10 @@ const SellItems = () => {
         e.preventDefault();
         
         const name = document.getElementById('A').value;
-        const category = document.getElementById('B').value;
-        const condition = document.getElementById('C').innerHTML;
-        const description = document.getElementById('D').innerHTML;
-        const price = document.getElementById('E').innerHTML;
+        const category = document.getElementById('B').options[document.getElementById('B').selectedIndex].innerHTML;
+        const condition = document.getElementById('C').options[document.getElementById('C').selectedIndex].innerHTML;
+        const description = document.getElementById('D').value;
+        const price = document.getElementById('E').value;
         const photo = imageData
         const user = localStorage.getItem('user')
         
@@ -33,7 +33,7 @@ const SellItems = () => {
             } else {
               console.log('Account creation failed'); // Handle error as needed
               // Set a state variable to display an error message to the user
-              document.getElementById('err mes').innerHTML = res.data.response
+              //document.getElementById('err mes').innerHTML = res.data.response
             }
             console.log(res); 
           })
