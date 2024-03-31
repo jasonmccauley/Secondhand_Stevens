@@ -4,21 +4,24 @@ import '../styles/sellItems.css';
 
 const SellItems = () => {
   const navigate = useNavigate();
+  const [itemList, setItemList] = useState([]);
   const [item, setItem] = useState('');
   const [category, setCategory] = useState('');
   const [condition, setCondition] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
+  const [image, setImage] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
 
   const handleSellItem = (e) => {
     e.preventDefault();
-    // Check if all fields are filled
-    if (!item || !category || !condition || !description || !price) {
+    if (!item || !category || !condition || !description || !price || !image) {
       return;
     }
-    // Implement logic to list item (e.g., send data to backend)
-    // For demonstration purposes, just show success message
+    const formData = { item, category, condition, description, price, image };
+    const newItemList = [...itemList, formData];
+    setItemList(newItemList);
+    navigate('/buyItems', { state: { itemList: newItemList } });
     setSuccessMessage('Your item has been successfully listed!');
   };
 
@@ -28,6 +31,11 @@ const SellItems = () => {
 
   const handleLogout = () => {
     navigate('/');
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
   };
 
   return (
@@ -97,6 +105,14 @@ const SellItems = () => {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="Enter price"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="image">Upload image</label>
+              <input
+                type="file"
+                id="image"
+                onChange={handleImageUpload}
               />
             </div>
             <button type="submit" className="btn">List Item</button>

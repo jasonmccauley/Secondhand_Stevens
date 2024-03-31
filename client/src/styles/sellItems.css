@@ -38,7 +38,8 @@ label {
 
 input[type="text"],
 select,
-textarea {
+textarea,
+input[type="file"] {
   width: calc(100% - 20px);
   padding: 10px;
   border: 1px solid #ccc;

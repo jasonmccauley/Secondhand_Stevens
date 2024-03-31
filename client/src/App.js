@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import CreateAccount from './pages/CreateAccount';
 import Landing from './pages/Landing';
 import SellItems from './pages/SellItems'; // Import SellItems component
+import BuyItems from './pages/BuyItems'; // Import BuyItems component
 import './App.css'; // Import CSS file from styles folder
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path="/create-account" element={<CreateAccount />} />
           <Route path="/landing" element={<Landing />} />
           <Route path="/sellItems" element={<SellItems />} /> {/* Route for SellItems */}
+          <Route path="/buyItems" element={<BuyItems />} /> {/* Route for BuyItems */}
         </Routes>
       </div>
     </Router>
