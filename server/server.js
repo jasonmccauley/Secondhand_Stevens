@@ -112,6 +112,28 @@ app.post('/api/showAllListings', (req, res) => {
 
 
 
+app.post('/api/Search', (req, res) => {
+  // Retrieve message from request body
+  const { searchWord } = req.body
+  
+  listDatabase.find({},function(err,output){
+    last = []
+    for (let i = 0; i < output.length; i++) {
+      if(output[i]["name"].toLowerCase().includes(searchWord.toLowerCase())){
+        last.push(output[i])
+      }
+
+      }
+    
+    res.json({response:  last})
+  })
+  
+  // Process message (e.g., log it)
+  // Send back a response
+});
+
+
+
 app.post('/api/showSortedListings', (req, res) => {
   // Retrieve message from request body
   const { type } = req.body

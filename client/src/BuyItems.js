@@ -14,11 +14,13 @@ const BuyItems = () => {
   
   const [appState, changeChange] = useState({
    
-      objects : [{_id:"1"}, {_id:"2"}, {_id:"3"}, {_id:"4"}]
+      objects : []
   })
 
-  // Function to handle log out
-  const handleLogout = () => {
+  const handleLogout = (e) => {
+    e.preventDefault();
+    
+    localStorage.setItem("user", "");
     navigate('/');
   };
 
@@ -64,10 +66,26 @@ const BuyItems = () => {
     
   }
 
-  // Function to handle search input change
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
+    e.preventDefault();
+    
+    const searchWord = document.getElementById('search').value;
+   
+
+    axios.post('/api/Search', {searchWord})
+      .then((res) => {
+        changeChange({
+          objects : res.data.response
+      })
+      })
+
+      .catch((error) => {
+        console.error('Error during account creation:', error);
+        // Handle other errors...
+      });
   };
+      
+      
 
   // Function to handle filter change
   const handleFilterChange = (e) => {
@@ -100,7 +118,7 @@ const BuyItems = () => {
           <input
             type="text"
             placeholder="Search items"
-            value={searchQuery}
+            id="search"
             onChange={handleSearchChange}
           />
         </div>
@@ -122,7 +140,25 @@ const BuyItems = () => {
       <br></br><br></br><br></br>
       {appState.objects.map((elements,index) => (
         
-        <p key={index}  > {appState.objects[index]["_id"]} </p>
+        <div key={index}> 
+        
+        
+        <img src={appState.objects[index]["photo"]} alt="Preview" style={{ maxWidth: '100%' }} /><br></br>
+        
+        Name: {appState.objects[index]["name"]} <br></br>
+        Price: {appState.objects[index]["price"]} <br></br>
+        Condition: {appState.objects[index]["condition"]} <br></br>
+        Category: {appState.objects[index]["category"]} <br></br>
+        Seller: {appState.objects[index]["user"]} <br></br>
+        <button>Buy Now!</button>
+        <br></br><br></br>
+
+        
+       
+        
+        
+        </div>
+        
         ))
 
         }
