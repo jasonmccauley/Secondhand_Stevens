@@ -82,15 +82,16 @@ app.post('/api/logIn', (req, res) => {
 
 app.post('/api/listItem', (req, res) => {
   // Retrieve message from request body
-  const { nameList } = req.body
-  const { description } = req.body
-  const { list_of_photos } = req.body
-  const { type_of_item } = req.body
-  const { userList } = req.body
-  const { sell_or_donate } = req.body
-  const { organization } = req.body
+  const { name } = req.body
+  const { category } = req.body
+  const { condition } = req.body
+  const { descripition } = req.body
+  const { price } = req.body
+  const { photo } = req.body
+  const { user } = req.body
+ 
   
-  listDatabase.insert({nameList: nameList, description:description, list_of_photos:list_of_photos, type_of_item:type_of_item, userList:userList, sell_or_donate:sell_or_donate, organization:organization})
+  listDatabase.insert({name: name, category:category, condition:condition, descripition:descripition, price:price, photo:photo, user})
   res.json({ response: 'Item Listed' });
   // Process message (e.g., log it)
   // Send back a response

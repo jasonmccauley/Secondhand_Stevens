@@ -30,8 +30,8 @@ const Landing = () => {
       <div className="content">
         <h2 className="title">What would you like to do today?</h2>
         <div className="action-buttons">
-          <Link to="/buyItems" className="action-button">Buy</Link>
-          <Link to="/sellItems" className="action-button">Sell</Link>
+          <Link to="/BuyItems" className="action-button">Buy</Link>
+          <Link to="/SellItems" className="action-button">Sell</Link>
         </div>
       </div>
     </div>

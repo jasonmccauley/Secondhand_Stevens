@@ -12,6 +12,9 @@ import CreateAccount from "./CreateAccount";
 
 import Landing from "./Landing";
 
+import BuyItems from "./BuyItems";
+import SellItems from './SellItems';
+
 function App() {
   
   
@@ -134,6 +137,8 @@ function App() {
       <Route path="/About" element={<About/>}>  </Route>
       <Route path="/CreateAccount" element={<CreateAccount/>}>  </Route>
       <Route path="/Landing" element={<Landing/>}>  </Route>
+      <Route path="/BuyItems" element={<BuyItems/>}>  </Route>
+      <Route path="/SellItems" element={<SellItems/>}>  </Route>
     </Routes>
     </BrowserRouter>
   );

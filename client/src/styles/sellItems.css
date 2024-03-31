@@ -1,0 +1,75 @@
+.navbar {
+  background-color: maroon;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-title {
+  font-size: 1.5rem;
+  margin-right: auto; /* Pushes it to the left */
+}
+
+.logout-btn {
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.sell-items-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-group {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-family: Arial, sans-serif; /* Apply the same font-family as inputs */
+}
+
+input[type="text"],
+select,
+textarea,
+input[type="file"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: Arial, sans-serif; /* Apply the same font-family as inputs */
+}
+
+select {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.success-message {
+  font-size: 1.2rem;
+  color: green;
+  margin-bottom: 20px;
+}
+
+.sell-items-container button[type="submit"] {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: maroon;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sell-items-container button[type="submit"]:hover {
+  background-color: #800000;
+}
