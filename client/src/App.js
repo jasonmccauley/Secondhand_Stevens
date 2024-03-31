@@ -10,6 +10,8 @@ import About from "./About";
 
 import CreateAccount from "./CreateAccount";
 
+import Landing from "./Landing";
+
 function App() {
   
   
@@ -131,6 +133,7 @@ function App() {
       <Route index element=<Home /> />
       <Route path="/About" element={<About/>}>  </Route>
       <Route path="/CreateAccount" element={<CreateAccount/>}>  </Route>
+      <Route path="/Landing" element={<Landing/>}>  </Route>
     </Routes>
     </BrowserRouter>
   );

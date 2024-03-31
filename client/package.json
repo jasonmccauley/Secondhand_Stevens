@@ -2,7 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "start": "set PORT=3000 && react-scripts start",
-  "proxy":"http://localhost:3006/",
+  "proxy": "http://localhost:8080/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",

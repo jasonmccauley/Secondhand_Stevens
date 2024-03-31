@@ -9,6 +9,7 @@ import CreateAccount from './CreateAccount';
 
 
 
+
 export default function Home(){
     
     const login = async () => {
@@ -24,6 +25,7 @@ export default function Home(){
           console.log("HEY")
           // Update response state with the received message
           console.log(res.data.response + " | " + res.data.username)
+          
         } catch (error) {
           
         }

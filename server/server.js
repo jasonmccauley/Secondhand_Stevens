@@ -3,16 +3,14 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-var cors = require('cors')
-
-app.use(cors()) // Use this after the variable declaration
-
 app.set('server', {
     maxHeaderSize: 100 * 1024, // 16KB, adjust as needed
   });
 const PORT = 8080;
 
+var cors = require('cors')
 
+app.use(cors()) // Use this after the variable declaration
 
 
 app.use(bodyParser.json());
@@ -39,7 +37,7 @@ app.post('/api/createAccount', (req, res) => {
     }
     else{
       database.insert({username: username, password:password, email:email})
-      res.json({ response: 'Account created ', username:username });
+      res.json({ response: 'Account Created', username:username });
     }
   })
   // Process message (e.g., log it)
@@ -49,15 +47,14 @@ app.post('/api/createAccount', (req, res) => {
 });
 
 
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
-
 app.post('/api/logIn', (req, res) => {
-  
   // Retrieve message from request body
   console.log(req.body)
   const { email } = req.body
