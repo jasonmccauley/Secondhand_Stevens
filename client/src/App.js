@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+import {BrowserRouter, Routes, Route, Link} from "react-router-dom"
+
+
+import Home from "./Home"
+
+import About from "./About";
 
 function App() {
-
+  
   
 
 
-  const [message, setMessage] = useState('');
-  const [response, setResponse] = useState('');
+ 
+
+
 
 
 
@@ -117,49 +124,12 @@ function App() {
 
 
   return (
-    <div>
-      <input id = "usernameBox" placeholder = "username"/> <input id = "passwordBox" placeholder = "password"/> <input id = "emailBox" placeholder = "email"/>
-      <button onClick={signUp}>create account</button>
-      <p id="createDebug">Response from server: {response}</p>
-
-
-      <br></br>
-      <br></br>
-      <br></br>
-
-      <input id = "loginEmail" placeholder = "email"/> <input id = "loginPass" placeholder = "password"/>
-      <button onClick={login}>Login</button>
-      <p id="loginDebug">Response from server: {response}</p>
-
-
-      <br></br>
-      <br></br>
-      <br></br>
-
-      
-      <input id = "nameList" placeholder = "name of product"/> <input id = "description" placeholder = "description"/> <input id = "list_of_photos" placeholder = "photos"/> 
-      <input id = "type_of_item" placeholder = "type of item"/> <input id = "userList" placeholder = "username"/> <input id = "sell_or_donate" placeholder = "selling or donating"/>
-      <input id = "organization" placeholder = "organization/sorority/fraternity"/>
-      <button onClick={listItem}>list item</button>
-      <p id="listDebug">Response from server: {response}</p>
-
-      <br></br>
-      <br></br>
-      <br></br>
-
-      <button onClick={showAllListings}>Show All Items for Sale</button>
-      <p id="showAllDebug"> Response from server: {response}</p>
-
-      <br></br>
-      <br></br>
-      <br></br>
-
-      
-      <input id = "sortedType" placeholder = "name of product"/> 
-      <button onClick={showSortedListings}>Show Sorted Items for Sale</button>
-      <p id="sortedDebug"> Response from server: {response}</p>
-
-    </div>
+    <BrowserRouter>
+    <Routes>
+      <Route index element=<Home /> />
+      <Route path="/About" element={<About/>}>  </Route>
+    </Routes>
+    </BrowserRouter>
   );
 }
 
