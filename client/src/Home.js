@@ -4,7 +4,7 @@ import './styles/login.css'; // Import CSS file from styles folder
 import {BrowserRouter, Routes, Route, Link} from "react-router-dom"
 import myImage from './image.png';
 import axios from 'axios';
-
+import CreateAccount from './CreateAccount';
 
 
 
@@ -54,7 +54,7 @@ export default function Home(){
                             
                             <button className="btn" onClick={login}> Sign In</button>
                         
-                        <p className="signup-link">Don't have an account? <Link to="/create-account">Create one</Link></p>
+                        <p className="signup-link">Don't have an account? <Link to="/CreateAccount">Create one</Link></p>
                         </div>
         </>
     );

@@ -3,6 +3,10 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+var cors = require('cors')
+
+app.use(cors()) // Use this after the variable declaration
+
 app.set('server', {
     maxHeaderSize: 100 * 1024, // 16KB, adjust as needed
   });
