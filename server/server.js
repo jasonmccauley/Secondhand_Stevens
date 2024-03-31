@@ -116,7 +116,7 @@ app.post('/api/showSortedListings', (req, res) => {
   // Retrieve message from request body
   const { type } = req.body
 
-  listDatabase.find({type_of_item: type},function(err,output){
+  listDatabase.find({category: type},function(err,output){
     res.json({response:  output})
   })
   

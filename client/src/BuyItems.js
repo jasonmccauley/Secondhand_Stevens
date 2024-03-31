@@ -1,19 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import './styles/buyItems.css'; // Import CSS file for BuyItems page
 
 const BuyItems = () => {
+  
   const navigate = useNavigate();
   const location = useLocation(); // Access location object
   const itemList = location.state?.itemList || []; // Access itemList from location state, provide default value if undefined
   const [searchQuery, setSearchQuery] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
   
+  
+  const [appState, changeChange] = useState({
+   
+      objects : [{_id:"1"}, {_id:"2"}, {_id:"3"}, {_id:"4"}]
+  })
 
   // Function to handle log out
   const handleLogout = () => {
     navigate('/');
   };
+
+
+  
+  
+  useEffect(() => {
+    showItems();
+  }, []);
+
+ 
+
+  const showItems =() => {
+    console.log("Show Time")
+    let type = document.getElementById('B').options[document.getElementById('B').selectedIndex].innerHTML;
+    console.log(type)
+    console.log(type)
+    if(type == "All Categories"){
+      axios.post('/api/showAllListings', {type})
+      .then((res) => {
+        console.log(res.data.response); 
+
+        
+     
+
+        changeChange({
+            objects : res.data.response
+        })
+        
+      })
+    }
+    else{
+      axios.post('/api/showSortedListings', {type})
+      .then((res) => {
+        console.log(res.data.response); 
+        
+        
+        changeChange({
+          objects : res.data.response
+      })
+      })
+    }
+    
+  }
 
   // Function to handle search input change
   const handleSearchChange = (e) => {
@@ -35,9 +84,9 @@ const BuyItems = () => {
     <div className="buy-items-container">
       {/* Navigation bar */}
       <div className="navbar">
-        <div className="nav-title">Buy</div>
+        <div className="nav-title" >Buy</div>
         <div className="nav-filter">
-          <select value={filterCategory} onChange={handleFilterChange}>
+          <select id="B" onChange={showItems} onLoad = {showItems}>
             <option value="">All Categories</option>
             <option value="Books">Books</option>
             <option value="Clothing">Clothing</option>
@@ -46,6 +95,7 @@ const BuyItems = () => {
             <option value="Furniture">Furniture</option>
           </select>
         </div>
+        
         <div className="nav-search">
           <input
             type="text"
@@ -54,24 +104,38 @@ const BuyItems = () => {
             onChange={handleSearchChange}
           />
         </div>
+
+        
+        
+        
         <div className="nav-links">
           <button className="logout-btn" onClick={handleLogout}>Log Out</button>
         </div>
+
+    
+       
+
+      
       </div>
-      {/* List of items */}
-      <div className="items-list">
-        {filteredItems.map((item, index) => (
-          <div className="item" key={index}>
-            <img src={item.image} alt={item.name} className="item-image" />
-            <div className="item-details">
-              <div className="item-name">{item.name}</div>
-              <div className="item-condition">Condition: {item.condition}</div>
-              <div className="item-price">Price: {item.price} USD</div>
-            </div>
-          </div>
-        ))}
-      </div>
+      
+
+      <br></br><br></br><br></br>
+      {appState.objects.map((elements,index) => (
+        
+        <p key={index}  > {appState.objects[index]["_id"]} </p>
+        ))
+
+        }
+
+      
+
+      
+      
+      
+      
+      
     </div>
+    
   );
 };
 

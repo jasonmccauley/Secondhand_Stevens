@@ -27,8 +27,7 @@ const SellItems = () => {
         
         axios.post('/api/listItem', {name, category, condition, description, price, photo, user})
           .then((res) => {
-            if (res.data.response === 'Successfully logged In') {
-              localStorage.setItem('user', res.data.username);
+            if (res.data.response === "Item Listed") {
               navigate('/Landing'); // Redirect to the Landing page
             } else {
               console.log('Account creation failed'); // Handle error as needed
