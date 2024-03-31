@@ -5,31 +5,42 @@ import {BrowserRouter, Routes, Route, Link} from "react-router-dom"
 import myImage from './image.png';
 import axios from 'axios';
 import CreateAccount from './CreateAccount';
+import { useNavigate } from 'react-router-dom';
 
 
 
 
 
-export default function Home(){
+function Home(){
+    const navigate = useNavigate();
     
-    const login = async () => {
-        try {
-            axios.defaults.baseURL = window.location.protocol + "//" + window.location.hostname + ":8080";
-            console.log("Used")
-          // Make a POST request to backend route with message
-          let email = (document.getElementById('loginEmail').value)
-          let password = (document.getElementById('loginPass').value)
-          console.log("UsedTWO")
-          const res = await axios.post('/api/logIn', {email, password});
-          console.log("UsedTHree")
-          console.log("HEY")
-          // Update response state with the received message
-          console.log(res.data.response + " | " + res.data.username)
-          
-        } catch (error) {
-          
-        }
+    const HandleLogIn = (e) => {
+        e.preventDefault();
+        
+        const password = document.getElementById('loginPass').value;
+        const email = document.getElementById('loginEmail').value;
+    
+        axios.post('/api/logIn', {email, password})
+          .then((res) => {
+            if (res.data.response === 'Successfully logged In') {
+              localStorage.setItem('user', res.data.username);
+              navigate('/Landing'); // Redirect to the Landing page
+            } else {
+              console.log('Account creation failed'); // Handle error as needed
+              // Set a state variable to display an error message to the user
+              document.getElementById('err mes').innerHTML = res.data.response
+            }
+            console.log(res); 
+          })
+    
+          .catch((error) => {
+            console.error('Error during account creation:', error);
+            // Handle other errors...
+          });
       };
+    
+
+    
 
     return(
         <>
@@ -53,8 +64,12 @@ export default function Home(){
                                 
                             />
                             </div>
+
+                            <div className="form-group">
+                                <label id="err mes"></label>
+                                </div>
                             
-                            <button className="btn" onClick={login}> Sign In</button>
+                            <button className="btn" onClick={HandleLogIn}> Sign In</button>
                         
                         <p className="signup-link">Don't have an account? <Link to="/CreateAccount">Create one</Link></p>
                         </div>
@@ -62,5 +77,5 @@ export default function Home(){
     );
 }
 
-
+export default Home;
 

@@ -20,6 +20,7 @@ function CreateAccount() {
         } else {
           console.log('Account creation failed'); // Handle error as needed
           // Set a state variable to display an error message to the user
+          document.getElementById('err mes').innerHTML = res.data.response
         }
         console.log(res); 
       })
@@ -44,6 +45,9 @@ function CreateAccount() {
       <div className="form-group">
         <label>Password</label>
         <input type="password" id="passwordBox" />
+      </div>
+      <div className="form-group">
+      <label id="err mes"></label>
       </div>
       <button onClick={HandleSignUp}>Sign Up</button>
     </div>
