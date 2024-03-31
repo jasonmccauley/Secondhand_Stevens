@@ -16,6 +16,7 @@
   position: absolute; /* Use absolute positioning */
   top: calc(100% + 10px); /* Position below the navbar */
   right: 20px; /* Adjust horizontal position */
+  width:200px
 }
 
 .nav-filter select {
