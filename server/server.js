@@ -20,6 +20,10 @@ const Datastore = require('nedb')
 const database = new Datastore("database.db")
 database.loadDatabase();
 
+
+
+
+
 const listDatabase = new Datastore("list.db")
 listDatabase.loadDatabase();
 
@@ -48,7 +52,13 @@ app.post('/api/createAccount', (req, res) => {
 
 
 
+
+
+
+
 app.use(function(req, res, next) {
+
+ 
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
@@ -79,19 +89,21 @@ app.post('/api/logIn', (req, res) => {
 
 
 
-
+app.use(bodyParser.json({limit: '10000kb'}));
 app.post('/api/listItem', (req, res) => {
+  console.log(req.body)
+  
   // Retrieve message from request body
   const { name } = req.body
   const { category } = req.body
   const { condition } = req.body
-  const { descripition } = req.body
+  const { description } = req.body
   const { price } = req.body
   const { photo } = req.body
   const { user } = req.body
  
-  
-  listDatabase.insert({name: name, category:category, condition:condition, descripition:descripition, price:price, photo:photo, user})
+  console.log(description)
+  listDatabase.insert({name: name, category:category, condition:condition, description:description, price:price, photo:photo, user:user})
   res.json({ response: 'Item Listed' });
   // Process message (e.g., log it)
   // Send back a response
@@ -103,6 +115,7 @@ app.post('/api/showAllListings', (req, res) => {
   
   
   listDatabase.find({},function(err,output){
+    console.log(output)
     res.json({response:  output})
   })
   
@@ -115,7 +128,9 @@ app.post('/api/showAllListings', (req, res) => {
 app.post('/api/Search', (req, res) => {
   // Retrieve message from request body
   const { searchWord } = req.body
-  
+  const { category } = req.body
+
+  if(category == "All Categories"){
   listDatabase.find({},function(err,output){
     last = []
     for (let i = 0; i < output.length; i++) {
@@ -127,6 +142,20 @@ app.post('/api/Search', (req, res) => {
     
     res.json({response:  last})
   })
+}
+else{
+  listDatabase.find({category: category},function(err,output){
+    last = []
+    for (let i = 0; i < output.length; i++) {
+      if(output[i]["name"].toLowerCase().includes(searchWord.toLowerCase())){
+        last.push(output[i])
+      }
+
+      }
+    
+    res.json({response:  last})
+  })
+}
   
   // Process message (e.g., log it)
   // Send back a response

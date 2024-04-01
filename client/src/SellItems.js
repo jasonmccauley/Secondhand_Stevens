@@ -20,7 +20,12 @@ const SellItems = () => {
         const name = document.getElementById('A').value;
         const category = document.getElementById('B').options[document.getElementById('B').selectedIndex].innerHTML;
         const condition = document.getElementById('C').options[document.getElementById('C').selectedIndex].innerHTML;
+
+        
         const description = document.getElementById('D').value;
+
+     
+        
         const price = document.getElementById('E').value;
         const photo = imageData
         const user = localStorage.getItem('user')
@@ -77,6 +82,11 @@ const SellItems = () => {
     navigate('/');
   };
 
+  const handleBack = (e) => {
+    navigate('/Landing');
+  };
+  
+
   
 
     
@@ -110,6 +120,7 @@ const SellItems = () => {
         <div className="nav-title">Sell</div>
         <div className="nav-links">
           <button className="logout-btn" onClick={handleLogout}>Log Out</button>
+          <button className="logout-btn" onClick={handleBack}>Go Back</button>
         </div>
       </div>
       <div className="content">

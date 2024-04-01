@@ -24,6 +24,10 @@ const BuyItems = () => {
     navigate('/');
   };
 
+  const handleBack = (e) => {
+    navigate('/Landing');
+  };
+
 
   
   
@@ -42,9 +46,9 @@ const BuyItems = () => {
       axios.post('/api/showAllListings', {type})
       .then((res) => {
         console.log(res.data.response); 
-
         
-     
+        
+        
 
         changeChange({
             objects : res.data.response
@@ -70,9 +74,9 @@ const BuyItems = () => {
     e.preventDefault();
     
     const searchWord = document.getElementById('search').value;
-   
-
-    axios.post('/api/Search', {searchWord})
+    const category = document.getElementById('B').options[document.getElementById('B').selectedIndex].innerHTML;
+    console.log(category)
+    axios.post('/api/Search', {searchWord, category})
       .then((res) => {
         changeChange({
           objects : res.data.response
@@ -103,7 +107,7 @@ const BuyItems = () => {
       {/* Navigation bar */}
       <div className="navbar">
         <div className="nav-title" >Buy</div>
-        <div className="nav-filter">
+        <div className="nav-filter" >
           <select id="B" onChange={showItems} onLoad = {showItems}>
             <option value="">All Categories</option>
             <option value="Books">Books</option>
@@ -128,6 +132,7 @@ const BuyItems = () => {
         
         <div className="nav-links">
           <button className="logout-btn" onClick={handleLogout}>Log Out</button>
+          <button className="logout-btn" onClick={handleBack}>Go Back</button>
         </div>
 
     
@@ -147,6 +152,7 @@ const BuyItems = () => {
         
         Name: {appState.objects[index]["name"]} <br></br>
         Price: {appState.objects[index]["price"]} <br></br>
+        Description: {appState.objects[index]["description"]} <br></br>
         Condition: {appState.objects[index]["condition"]} <br></br>
         Category: {appState.objects[index]["category"]} <br></br>
         Seller: {appState.objects[index]["user"]} <br></br>
