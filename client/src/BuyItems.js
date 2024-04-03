@@ -9,7 +9,7 @@ const BuyItems = () => {
   const location = useLocation(); // Access location object
   const itemList = location.state?.itemList || []; // Access itemList from location state, provide default value if undefined
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterCategory, setFilterCategory] = useState('');
+  const [filterCategory, setFilterCategory] = useState(''); //setting filters
   
   
   const [appState, changeChange] = useState({
