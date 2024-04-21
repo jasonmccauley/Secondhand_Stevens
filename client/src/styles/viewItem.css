@@ -1,0 +1,91 @@
+.navbar {
+  background-color: maroon;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative; /* Add relative positioning */
+}
+
+.nav-title {
+  font-size: 1.5rem;
+}
+
+.nav-view {
+  position: absolute; /* Use absolute positioning */
+  top: calc(100% + 10px); /* Position below the navbar */
+  left: 20px; /* Adjust horizontal position */
+}
+
+.nav-filter {
+  position: absolute; /* Use absolute positioning */
+  top: calc(100% + 10px); /* Position below the navbar */
+  right: 20px; /* Adjust horizontal position */
+  width:200px;
+  color: black
+}
+
+.nav-filter select {
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  color: black
+}
+
+.nav-search {
+  position: absolute; /* Use absolute positioning */
+  top: calc(100% + 10px); /* Position below the navbar */
+  left: 10px; /* Adjust horizontal position */
+  color: black;
+  
+}
+
+.nav-search input {
+  width: 100%; /* Fill the available space */
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+}
+
+.logout-btn {
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.buy-items-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.items-list {
+  margin-top: 20px;
+}
+
+.item {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.item-image {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+}
+
+.item-details {
+  flex: 1;
+}
+
+.item-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.item-condition,
+.item-price {
+  margin-top: 5px;
+}

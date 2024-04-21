@@ -1,7 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+
 const app = express();
+app.use(bodyParser.json({limit:1024*1024*20, type:'application/json'}));
+app.use(bodyParser.urlencoded({extended:true,limit:1024*1024*20,type:'application/x-www-form-urlencoding' }));
+
 
 app.set('server', {
     maxHeaderSize: 100 * 1024, // 16KB, adjust as needed
@@ -24,18 +28,80 @@ database.loadDatabase();
 
 
 
+var fs = require('fs');
+
+
 const listDatabase = new Datastore("list.db")
 listDatabase.loadDatabase();
 
 // Route to handle button press request
 app.post('/api/createAccount', (req, res) => {
   // Retrieve message from request body
-  console.log(req.body)
   const { username } = req.body;
   const { password } = req.body
   const { email } = req.body
   database.find({email:email},function(err,output){
-    console.log(output)
+    
+    if(output.length > 0){
+      res.json({ response: 'Account already exist',  username:" FAILED LOGIN!! "});
+    }
+    else{
+
+      fs.mkdirSync("accounts/" + username);
+
+      database.insert({username: username, password:password, email:email})
+      res.json({ response: 'Account Created', username:username, email:email});
+    }
+  })
+  // Process message (e.g., log it)
+  
+  // Send back a response
+});
+
+
+
+// Route to handle button press request
+app.post('/api/sendMessage', (req, res) => {
+  // Retrieve message from request body
+  const { user } = req.body;
+  const { rec } = req.body
+  const { email } = req.body
+  const { mes } = req.body
+  const d = new Date();
+
+  database.find({username:rec},function(err,output){
+    if(output.length > 0){
+      const databaseRec = new Datastore("accounts/" + output[0]["email"] + "/mes.db")
+      databaseRec.loadDatabase();
+      databaseRec.insert({mes: mes, from:rec, to:user, time:d})
+
+      const databaseFrom = new Datastore("accounts/" + email + "/mes.db")
+      databaseFrom.loadDatabase();
+      databaseFrom.insert({mes: mes, from:rec, to:user, time:d})
+      databaseFrom.find({},function(err,output){
+        res.json({ response: "Message Sent", info:output});
+      })
+      
+    }
+    else{
+      res.json({ response: 'User Not Found'});
+    }
+  })
+  // Process message (e.g., log it)
+  
+  // Send back a response
+});
+
+
+// Route to handle button press request
+app.post('/api/getOrders', (req, res) => {
+  // Retrieve message from request body
+
+  const { username } = req.body;
+  const { password } = req.body
+  const { email } = req.body
+  database.find({email:email},function(err,output){
+
     if(output.length > 0){
       res.json({ response: 'Account already exist',  username:" FAILED LOGIN!! "});
     }
@@ -45,13 +111,9 @@ app.post('/api/createAccount', (req, res) => {
     }
   })
   // Process message (e.g., log it)
-  console.log('Received message:', username);
-  console.log('Received message:', password);
+
   // Send back a response
 });
-
-
-
 
 
 
@@ -64,23 +126,27 @@ app.use(function(req, res, next) {
   next();
 });
 
+
+
+
+
 app.post('/api/logIn', (req, res) => {
   // Retrieve message from request body
-  console.log(req.body)
+
   const { email } = req.body
   const { password } = req.body
   database.find({email:email},function(err,output){
-    console.log(output)
+
     if(output.length > 0){
       if(output[0]["password"] == password){
-      res.json({ response: 'Successfully logged In',  username:output[0]["username"]});
+      res.json({ response: 'Successfully logged In',  username:output[0]["username"], email:output[0]["email"]});
       }
       else{
-        res.json({ response: 'Wrong Password', username: "WRONG PASSWORD" });
+        res.json({ response: 'Wrong Password', username: "WRONG PASSWORD", email:"None"});
       }
     }
     else{
-      res.json({ response: 'Account does not exist ', username: "ACCOUNT DOES NOT EXIST" });
+      res.json({ response: 'Account does not exist ', username: "ACCOUNT DOES NOT EXIST", email:"None" });
     }
   })
   // Process message (e.g., log it)
@@ -89,9 +155,9 @@ app.post('/api/logIn', (req, res) => {
 
 
 
-app.use(bodyParser.json({limit: '10000kb'}));
+app.use(bodyParser.json({ limit: '100mb' }));
 app.post('/api/listItem', (req, res) => {
-  console.log(req.body)
+
   
   // Retrieve message from request body
   const { name } = req.body
@@ -101,45 +167,127 @@ app.post('/api/listItem', (req, res) => {
   const { price } = req.body
   const { photo } = req.body
   const { user } = req.body
+  const { email } = req.body
  
-  console.log(description)
-  listDatabase.insert({name: name, category:category, condition:condition, description:description, price:price, photo:photo, user:user})
+  
+  listDatabase.insert({name: name, category:category, condition:condition, description:description, price:price, photo:photo, user:user, email:email})
   res.json({ response: 'Item Listed' });
   // Process message (e.g., log it)
   // Send back a response
 });
 
 
+app.post('/api/buyItem', (req, res) => {
+  // Retrieve message from request body
+  
+  const {_id} = req.body
+  const {buyer} = req.body
+  console.log(_id)
+  var found = false;
+
+
+  listDatabase.find({_id:_id},function(err,output){
+    console.log(output)
+    console.log("STARTED")
+    console.log(buyer)
+    
+    
+    var email = output[0]["email"]
+    const databaseSell = new Datastore("accounts/" + email + "/sell.db")
+    databaseSell.loadDatabase();
+    databaseSell.insert(output[0])
+    const databaseBuy = new Datastore("accounts/" + buyer + "/buy.db")
+    databaseBuy.loadDatabase();
+    databaseBuy.insert(output[0])
+    })
+
+
+  
+
+
+  listDatabase.remove({_id:_id}, {_id:_id}, function(err, numRemoved) { database.persistence.compactDatafile(); });
+
+  
+
+  listDatabase.persistence.compactDatafile();
+  res.json({response:  "Okay!"})
+  
+
+  
+
+});
+
+  
+
+
 app.post('/api/showAllListings', (req, res) => {
   // Retrieve message from request body
   
-  
+  console.log("started")
   listDatabase.find({},function(err,output){
-    console.log(output)
     res.json({response:  output})
   })
-  
   // Process message (e.g., log it)
   // Send back a response
 });
 
+
+app.post('/api/showHistoryBuy', (req, res) => {
+  // Retrieve message from request body
+  
+  const {email} = req.body
+  const databaseSell = new Datastore("accounts/" + email + "/buy.db")
+  databaseSell.loadDatabase();
+
+  databaseSell.find({},function(err,output){
+    res.json({response:  output})
+  })
+  // Process message (e.g., log it)
+  // Send back a response
+});
+
+app.post('/api/showHistorySell', (req, res) => {
+  // Retrieve message from request body
+  
+  const {email} = req.body
+  const databaseSell = new Datastore("accounts/" + email + "/sell.db")
+  databaseSell.loadDatabase();
+
+  databaseSell.find({},function(err,output){
+    res.json({response:  output})
+  })
+  // Process message (e.g., log it)
+  // Send back a response
+});
+
+
+app.post('/api/showItem', (req, res) => {
+  // Retrieve message from request body
+  
+  const {_id} = req.body
+  listDatabase.find({_id: _id},function(err,output){
+    res.json({response:  output[0]})
+  })
+  // Process message (e.g., log it)
+  // Send back a response
+});
 
 
 app.post('/api/Search', (req, res) => {
   // Retrieve message from request body
   const { searchWord } = req.body
   const { category } = req.body
-
+  const { user } = req.body
+  console.log(user)
   if(category == "All Categories"){
-  listDatabase.find({},function(err,output){
+  listDatabase.find({name:{$ne: user}},function(err,output){
+
     last = []
     for (let i = 0; i < output.length; i++) {
-      if(output[i]["name"].toLowerCase().includes(searchWord.toLowerCase())){
+      if(output[i]["name"].toLowerCase().includes(searchWord.toLowerCase()) && output[i]["user"] != user){
         last.push(output[i])
       }
-
       }
-    
     res.json({response:  last})
   })
 }
@@ -174,6 +322,11 @@ app.post('/api/showSortedListings', (req, res) => {
   // Process message (e.g., log it)
   // Send back a response
 });
+
+
+
+// Fixing "413 Request Entity Too Large" errors
+
 
 app.listen(PORT, () => {
   console.log("Server is running on port ${PORT}");

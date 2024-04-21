@@ -13,6 +13,17 @@ import { useNavigate } from 'react-router-dom';
 
 function Home(){
     const navigate = useNavigate();
+
+    const handleLoad = () => {
+      if(localStorage.getItem("user") != ""){
+        console.log('Hi')
+        navigate('/Landing');
+      }
+    };
+    window.addEventListener('load', handleLoad);
+
+
+    
     
     const HandleLogIn = (e) => {
         e.preventDefault();
@@ -24,6 +35,8 @@ function Home(){
           .then((res) => {
             if (res.data.response === 'Successfully logged In') {
               localStorage.setItem('user', res.data.username);
+              localStorage.setItem('email', res.data.email);
+              console.log(localStorage.getItem("email"))
               navigate('/Landing'); // Redirect to the Landing page
             } else {
               console.log('Account creation failed'); // Handle error as needed

@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {BrowserRouter, Routes, Route, Link} from "react-router-dom"
@@ -6,12 +7,24 @@ import './styles/landing.css'; // Import CSS file from styles folder
 
 const Landing = () => {
 
+  const [buttonText, setButtonText] = useState(localStorage.getItem("user"));
+    
+  const handleLoad = () => {
+    setButtonText(localStorage.getItem("user"));
+  };
+  window.addEventListener('load', handleLoad);
+
+  const ManageAccount = () => {
+    navigate('/ViewHistory');
+  };
+  
+
 
     const navigate = useNavigate();
 
     const handleLogout = (e) => {
       e.preventDefault();
-      
+      localStorage.setItem("email", "");
       localStorage.setItem("user", "");
       navigate('/');
     };
@@ -24,6 +37,7 @@ const Landing = () => {
           <span>Welcome to Second Hand Stevens!</span>
         </div>
         <div className="nav-links">
+          <button className="logout-btn" onClick={ManageAccount}>{buttonText}</button>
           <button className="logout-btn" onClick={handleLogout}>Log Out</button>
         </div>
       </nav>

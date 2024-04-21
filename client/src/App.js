@@ -15,6 +15,12 @@ import Landing from "./Landing";
 import BuyItems from "./BuyItems";
 import SellItems from './SellItems';
 
+import ViewItem from './viewItem';
+
+import ViewHistoryBuy from './viewHistoryBuy';
+
+import Messages from './Message';
+
 function App() {
   
   
@@ -74,11 +80,9 @@ function App() {
 
   const showAllListings = async () => {
     try {
-
       const res = await axios.post('/api/showAllListings', {});
-      
       // Update response state with the received message
-      console.log(res.data.response)
+      //console.log(res.data.response)
       document.getElementById('showAllDebug').innerHTML = res.data.response + " | "
     } catch (error) {
       console.error('Error:', error);
@@ -137,8 +141,11 @@ function App() {
       <Route path="/About" element={<About/>}>  </Route>
       <Route path="/CreateAccount" element={<CreateAccount/>}>  </Route>
       <Route path="/Landing" element={<Landing/>}>  </Route>
+      <Route path="/ViewItem" element={<ViewItem/>}>  </Route>
       <Route path="/BuyItems" element={<BuyItems/>}>  </Route>
       <Route path="/SellItems" element={<SellItems/>}>  </Route>
+      <Route path="/ViewHistory" element={<ViewHistoryBuy/>}>  </Route>
+      <Route path="/Messages" element={<Messages/>}>  </Route>
     </Routes>
     </BrowserRouter>
   );

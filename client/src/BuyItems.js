@@ -13,14 +13,13 @@ const BuyItems = () => {
   
   
   const [appState, changeChange] = useState({
-   
       objects : []
   })
 
   const handleLogout = (e) => {
     e.preventDefault();
-    
     localStorage.setItem("user", "");
+    localStorage.setItem("email", "");
     navigate('/');
   };
 
@@ -29,27 +28,38 @@ const BuyItems = () => {
   };
 
 
+
+  const [buttonText, setButtonText] = useState(localStorage.getItem("user"));
+  const handleLoad = () => {
+    setButtonText(localStorage.getItem("user"));
+  };
+  window.addEventListener('load', handleLoad);
+
+  const ManageAccount = () => {
+    navigate('/ViewHistory');
+  };
+  
+
   
   
   useEffect(() => {
     showItems();
   }, []);
 
- 
+  const buyItems = async (id) => {
+    let _id = id
+    localStorage.setItem("itemID", _id)
+    navigate('/viewItem');
+  };
 
   const showItems =() => {
-    console.log("Show Time")
+    
     let type = document.getElementById('B').options[document.getElementById('B').selectedIndex].innerHTML;
-    console.log(type)
-    console.log(type)
+    
     if(type == "All Categories"){
       axios.post('/api/showAllListings', {type})
       .then((res) => {
-        console.log(res.data.response); 
         
-        
-        
-
         changeChange({
             objects : res.data.response
         })
@@ -59,8 +69,6 @@ const BuyItems = () => {
     else{
       axios.post('/api/showSortedListings', {type})
       .then((res) => {
-        console.log(res.data.response); 
-        
         
         changeChange({
           objects : res.data.response
@@ -75,8 +83,8 @@ const BuyItems = () => {
     
     const searchWord = document.getElementById('search').value;
     const category = document.getElementById('B').options[document.getElementById('B').selectedIndex].innerHTML;
-    console.log(category)
-    axios.post('/api/Search', {searchWord, category})
+    var user = localStorage.getItem("user")
+    axios.post('/api/Search', {searchWord, category, user})
       .then((res) => {
         changeChange({
           objects : res.data.response
@@ -89,7 +97,11 @@ const BuyItems = () => {
       });
   };
       
-      
+     
+  const testing = (e) => {
+    console.log("WE GOT SOMETHING")
+    console.log(e)
+  }
 
   // Function to handle filter change
   const handleFilterChange = (e) => {
@@ -131,6 +143,7 @@ const BuyItems = () => {
         
         
         <div className="nav-links">
+          <button className="logout-btn" onClick={ManageAccount}>{buttonText}</button>
           <button className="logout-btn" onClick={handleLogout}>Log Out</button>
           <button className="logout-btn" onClick={handleBack}>Go Back</button>
         </div>
@@ -156,7 +169,9 @@ const BuyItems = () => {
         Condition: {appState.objects[index]["condition"]} <br></br>
         Category: {appState.objects[index]["category"]} <br></br>
         Seller: {appState.objects[index]["user"]} <br></br>
-        <button>Buy Now!</button>
+        
+        <button onClick={() => buyItems(appState.objects[index]["_id"])}>Buy Now!</button>
+        
         <br></br><br></br>
 
         

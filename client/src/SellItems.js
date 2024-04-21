@@ -11,7 +11,15 @@ const SellItems = () => {
     const navigate = useNavigate();
     
 
-    
+    const [buttonText, setButtonText] = useState(localStorage.getItem("user"));
+    const handleLoad = () => {
+      setButtonText(localStorage.getItem("user"));
+    };
+    window.addEventListener('load', handleLoad);
+
+    const ManageAccount = () => {
+      navigate('/ViewHistory');
+    };
 
 
     const listItem = (e) => {
@@ -29,8 +37,9 @@ const SellItems = () => {
         const price = document.getElementById('E').value;
         const photo = imageData
         const user = localStorage.getItem('user')
+        const email = localStorage.getItem('email')
         
-        axios.post('/api/listItem', {name, category, condition, description, price, photo, user})
+        axios.post('/api/listItem', {name, category, condition, description, price, photo, user, email})
           .then((res) => {
             if (res.data.response === "Item Listed") {
               navigate('/Landing'); // Redirect to the Landing page
@@ -78,7 +87,10 @@ const SellItems = () => {
     navigate('/landing');
   };
 
-  const handleLogout = () => {
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.setItem("user", "");
+    localStorage.setItem("email", "");
     navigate('/');
   };
 
@@ -119,6 +131,7 @@ const SellItems = () => {
       <div className="navbar">
         <div className="nav-title">Sell</div>
         <div className="nav-links">
+          <button className="logout-btn" onClick={ManageAccount}>{buttonText}</button>
           <button className="logout-btn" onClick={handleLogout}>Log Out</button>
           <button className="logout-btn" onClick={handleBack}>Go Back</button>
         </div>

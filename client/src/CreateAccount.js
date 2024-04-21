@@ -16,6 +16,7 @@ function CreateAccount() {
       .then((res) => {
         if (res.data.response === 'Account Created') {
           localStorage.setItem('user', res.data.username);
+          localStorage.setItem('email', res.data.email);
           navigate('/Landing'); // Redirect to the Landing page
         } else {
           console.log('Account creation failed'); // Handle error as needed
