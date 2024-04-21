@@ -36,7 +36,7 @@ const BuyItems = () => {
   window.addEventListener('load', handleLoad);
 
   const ManageAccount = () => {
-    navigate('/ViewHistory');
+    navigate('/Messages');
   };
   
 
@@ -55,9 +55,10 @@ const BuyItems = () => {
   const showItems =() => {
     
     let type = document.getElementById('B').options[document.getElementById('B').selectedIndex].innerHTML;
-    
+    let user = localStorage.getItem("user")
+    console.log(user)
     if(type == "All Categories"){
-      axios.post('/api/showAllListings', {type})
+      axios.post('/api/showAllListings', {type, user})
       .then((res) => {
         
         changeChange({
@@ -143,9 +144,9 @@ const BuyItems = () => {
         
         
         <div className="nav-links">
-          <button className="logout-btn" onClick={ManageAccount}>{buttonText}</button>
-          <button className="logout-btn" onClick={handleLogout}>Log Out</button>
-          <button className="logout-btn" onClick={handleBack}>Go Back</button>
+          <button className="logout-btn" onClick={ManageAccount}>{buttonText} ||</button>
+          <button className="logout-btn" onClick={handleLogout}>Log Out ||</button>
+          <button className="logout-btn" onClick={handleBack}>Go Back ||</button>
         </div>
 
     

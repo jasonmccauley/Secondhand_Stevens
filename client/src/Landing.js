@@ -15,7 +15,7 @@ const Landing = () => {
   window.addEventListener('load', handleLoad);
 
   const ManageAccount = () => {
-    navigate('/ViewHistory');
+    navigate('/Messages');
   };
   
 
@@ -37,8 +37,8 @@ const Landing = () => {
           <span>Welcome to Second Hand Stevens!</span>
         </div>
         <div className="nav-links">
-          <button className="logout-btn" onClick={ManageAccount}>{buttonText}</button>
-          <button className="logout-btn" onClick={handleLogout}>Log Out</button>
+          <button className="logout-btn" onClick={ManageAccount}>{buttonText} ||</button>
+          <button className="logout-btn" onClick={handleLogout}>Log Out ||</button>
         </div>
       </nav>
       <div className="content">

@@ -10,6 +10,7 @@ const Messages = () => {
 
   const [item, setItem] = useState('');
 
+  const [errorMes, errorMessage] = useState('');
 
   const [buttonText, setButtonText] = useState(localStorage.getItem("user"));
     
@@ -36,12 +37,14 @@ const Messages = () => {
       .then((res) => {
         if(res.data.response == "Message Sent"){
             console.log(res.data.info)
-            changeChange({
-                objects : res.data.info
+            var list = res.data.info.sort(function(a, b) {return parseFloat(b.sortBy) - parseFloat(a.sortBy);})
+            console.log(list)
+            changeChange({ 
+                objects : list
             })
         }
         else{
-            console.log(res.data.response)
+            
         }
       })
   };
@@ -56,7 +59,7 @@ const Messages = () => {
   }, []);
 
   const ManageAccount = () => {
-    console.log("HELLO")
+    navigate('/ViewHistory');
   };
   
 
@@ -80,13 +83,17 @@ const Messages = () => {
         axios.post('/api/sendMessage', {email, user, rec, mes})
       .then((res) => {
         if(res.data.response == "Message Sent"){
-            console.log(res.data.info)
-            changeChange({
-                objects : res.data.info
-            })
+          console.log(res.data.info)
+          var list = res.data.info.sort(function(a, b) {return parseFloat(b.sortBy) - parseFloat(a.sortBy);})
+          console.log(list)
+          changeChange({ 
+              objects : list
+          })
+          errorMessage("")
         }
         else{
-            console.log(res.data.response)
+          console.log(res.data.response)
+          errorMessage(res.data.response)
         }
       })
       };
@@ -100,10 +107,9 @@ const Messages = () => {
           <span>THIS IS THE MESSAGE PAGE!</span>
         </div>
         <div className="nav-links">
-        <button className="logout-btn" onClick={handleMessage}>Send Message</button>
-          <button className="logout-btn" onClick={ManageAccount}>{buttonText}</button>
-          <button className="logout-btn" onClick={handleLogout}>Log Out</button>
-          <button className="logout-btn" onClick={handleBack}>Go Back</button>
+          <button className="logout-btn" onClick={ManageAccount}>{buttonText} || View Purchase History ||</button>
+          <button className="logout-btn" onClick={handleLogout}>Log Out || </button>
+          <button className="logout-btn" onClick={handleBack}>Go Back ||</button>
         </div>
       </nav>
       <div className="content">
@@ -113,10 +119,13 @@ const Messages = () => {
       <br></br><br></br><br></br>
       
       
-      <div className="nav-header" style={{padding:"0px"}} ></div>
-
-      <div style={{display:"flex", "flex-direction" : "column", "border": "20px solid #ccc", borderColor:"red", width:(Dimensions.get('window').width)}}>
-      <h1>Send Message</h1>
+      <div className="nav-header" style={{padding:"0px", width:(Dimensions.get('window').width)}} ></div>
+      <div style={{display:"flex", "flex-direction" : "column", "border": "20px solid #ccc", borderColor:"red", width:((Dimensions.get('window').width - 40))}}>
+      <div style={{display:"flex", "flex-direction" : "row"}}>
+        <h1>Send Message</h1>
+        <div><h4>{errorMes}</h4></div>
+      </div>
+      
       <input
                 type="text"
                 id="A"
@@ -124,12 +133,10 @@ const Messages = () => {
                 onChange={(e) => setItem(e.target.value)}
                 placeholder="Enter Username"
         />
-
             <textarea
             placeholder="Enter Message"
                 id="B"
             ></textarea>
-
             <button type="submit" className="btn" onClick = {handleMessage}>Send Message</button>
     </div>
 

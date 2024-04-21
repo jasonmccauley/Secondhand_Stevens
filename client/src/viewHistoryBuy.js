@@ -77,10 +77,10 @@ const Landing = () => {
           <span>History Page</span>
         </div>
         <div className="nav-links">
-        <button className="logout-btn" onClick={handleMessage}>Send Message</button>
-          <button className="logout-btn" onClick={ManageAccount}>{buttonText}</button>
-          <button className="logout-btn" onClick={handleLogout}>Log Out</button>
-          <button className="logout-btn" onClick={handleBack}>Go Back</button>
+        <button className="logout-btn" onClick={handleMessage}>Send Message ||</button>
+          <button className="logout-btn" onClick={ManageAccount}>{buttonText} ||</button>
+          <button className="logout-btn" onClick={handleLogout}>Log Out ||</button>
+          <button className="logout-btn" onClick={handleBack}>Go Back ||</button>
         </div>
       </nav>
       <div className="content">

@@ -29,7 +29,7 @@ const BuyItems = () => {
 
 
   const ManageAccount = () => {
-    navigate('/ViewHistory');
+    navigate('/Messages');
   };
     
   const completePurchase = (_id) => {
@@ -40,7 +40,7 @@ const BuyItems = () => {
       try{
         console.log(res)
         if (res = "Okay!"){
-          handleBack()
+          navigate('/Messages');
           console.log("Transaction successful")
         }
         else{
@@ -180,9 +180,9 @@ const BuyItems = () => {
         
         
         <div className="nav-links">
-          <button className="logout-btn" onClick={ManageAccount}>{buttonText}</button>
-          <button className="logout-btn" onClick={handleLogout}>Log Out</button>
-          <button className="logout-btn" onClick={handleBack}>Go Back</button>
+          <button className="logout-btn" onClick={ManageAccount}>{buttonText} ||</button>
+          <button className="logout-btn" onClick={handleLogout}>Log Out ||</button>
+          <button className="logout-btn" onClick={handleBack}>Go Back ||</button>
         </div>
 
     

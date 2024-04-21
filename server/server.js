@@ -63,10 +63,10 @@ app.post('/api/getMessages', (req, res) => {
   const { user } = req.body;
   const { email } = req.body
   const d = new Date();
-  console.log("started")
+ 
   
   try{
-    console.log("accounts/" + email + "/mes.db")
+    
       const databaseFrom = new Datastore("accounts/" + email + "/mes.db")
       databaseFrom.loadDatabase();
       databaseFrom.find({},function(err,output){
@@ -95,11 +95,11 @@ app.post('/api/sendMessage', (req, res) => {
     if(output.length > 0){
       const databaseRec = new Datastore("accounts/" + output[0]["email"] + "/mes.db")
       databaseRec.loadDatabase();
-      databaseRec.insert({mes: mes, from:rec, to:user, time:d})
+      databaseRec.insert({sortBy:d.getTime(), mes: mes, from:user, to:rec, time:d})
 
       const databaseFrom = new Datastore("accounts/" + email + "/mes.db")
       databaseFrom.loadDatabase();
-      databaseFrom.insert({mes: mes, from:rec, to:user, time:d})
+      databaseFrom.insert({sortBy:d.getTime(), mes: mes, from:user, to:rec, time:d})
       databaseFrom.find({},function(err,output){
         res.json({ response: "Message Sent", info:output});
       })
@@ -204,14 +204,12 @@ app.post('/api/buyItem', (req, res) => {
   
   const {_id} = req.body
   const {buyer} = req.body
-  console.log(_id)
+  
   var found = false;
 
   var d = new Date()
   listDatabase.find({_id:_id},function(err,output){
-    console.log(output)
-    console.log("STARTED")
-    console.log(buyer)
+  
     
     
     var email = output[0]["email"]
@@ -219,24 +217,31 @@ app.post('/api/buyItem', (req, res) => {
     databaseSell.loadDatabase();
     databaseSell.insert(output[0])
 
-    var name = ""
+
+
+    const itemName = output[0]["name"]
+    const amount = output[0]["price"]
+    
     database.find({email:email},function(err,output){
+      console.log("FOUND OUTPUT")
+      console.log(output)
       name = output[0]["username"]
+      const databaseRec = new Datastore("accounts/" + email + "/mes.db")
+      databaseRec.loadDatabase();
+      databaseRec.insert({sortBy:d.getTime(), mes: "Your " + itemName + " was Purchased by" + buyerName + ". The amount of " + amount + "$ will be deposited within 3-5 buisness days", from:"Second Hand Stevens", to:name, time:d})
+
     })
 
     var buyerName = ""
     database.find({email:buyer},function(err,output){
-      buyerName = output[0]["username"]
-    })
-
-    const databaseRec = new Datastore("accounts/" + email + "/mes.db")
-    databaseRec.loadDatabase();
-    databaseRec.insert({mes: "Your " + output[0]["name"] + " was Purchased. The money will be deposited within 3-5 buisness days", from:"Second Hand Stevens", to:name, time:d})
-
+      buyerName = output[0]["username"]      
     const databaseBuy = new Datastore("accounts/" + buyer + "/mes.db")
     databaseBuy.loadDatabase();
-    databaseBuy.insert({mes: "Purchase Confirmation for the " + output[0]["name"] + ". Your account will be charged " + output[0]["price"] + "$. If you think this is an error, please contact support at secondhand@stevens.edu", from:"Second Hand Stevens", to:buyerName, time:d})
+    databaseBuy.insert({sortBy:d.getTime(), mes:"Purchase Confirmation for the " + itemName + ". Your account will be charged " + amount + "$. If you think this is an error, please contact support at secondhand@stevens.edu", from:"Second Hand Stevens", to:buyerName, time:d})
 
+    })
+    
+    
     const databaseBuyer = new Datastore("accounts/" + buyer + "/buy.db")
     databaseBuyer.loadDatabase();
     databaseBuyer.insert(output[0])
@@ -264,9 +269,9 @@ app.post('/api/buyItem', (req, res) => {
 
 app.post('/api/showAllListings', (req, res) => {
   // Retrieve message from request body
+  const {user} = req.body
   
-  console.log("started")
-  listDatabase.find({},function(err,output){
+  listDatabase.find({user:{$ne: user}},function(err,output){
     res.json({response:  output})
   })
   // Process message (e.g., log it)
@@ -320,7 +325,7 @@ app.post('/api/Search', (req, res) => {
   const { searchWord } = req.body
   const { category } = req.body
   const { user } = req.body
-  console.log(user)
+ 
   if(category == "All Categories"){
   listDatabase.find({name:{$ne: user}},function(err,output){
 
@@ -334,7 +339,7 @@ app.post('/api/Search', (req, res) => {
   })
 }
 else{
-  listDatabase.find({category: category},function(err,output){
+  listDatabase.find({category: category, name:{$ne: user}},function(err,output){
     last = []
     for (let i = 0; i < output.length; i++) {
       if(output[i]["name"].toLowerCase().includes(searchWord.toLowerCase())){

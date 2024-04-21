@@ -18,7 +18,7 @@ const SellItems = () => {
     window.addEventListener('load', handleLoad);
 
     const ManageAccount = () => {
-      navigate('/ViewHistory');
+      navigate('/Messages');
     };
 
 
@@ -131,9 +131,9 @@ const SellItems = () => {
       <div className="navbar">
         <div className="nav-title">Sell</div>
         <div className="nav-links">
-          <button className="logout-btn" onClick={ManageAccount}>{buttonText}</button>
-          <button className="logout-btn" onClick={handleLogout}>Log Out</button>
-          <button className="logout-btn" onClick={handleBack}>Go Back</button>
+          <button className="logout-btn" onClick={ManageAccount}>{buttonText} ||</button>
+          <button className="logout-btn" onClick={handleLogout}>Log Out ||</button>
+          <button className="logout-btn" onClick={handleBack}>Go Back ||</button>
         </div>
       </div>
       <div className="content">
