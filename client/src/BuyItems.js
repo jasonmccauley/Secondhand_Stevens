@@ -30,10 +30,27 @@ const BuyItems = () => {
 
 
   const [buttonText, setButtonText] = useState(localStorage.getItem("user"));
+  
+  
+  
+  
+
+
+  
+
   const handleLoad = () => {
-    setButtonText(localStorage.getItem("user"));
+    const user = localStorage.getItem("user");
+    var email = localStorage.getItem("email")
+    axios.post('/api/checkNot', {email, user})
+    .then((res) => {
+      console.log("COOL")
+      setButtonText(
+          res.data.response
+      )
+    })
   };
   window.addEventListener('load', handleLoad);
+  
 
   const ManageAccount = () => {
     navigate('/Messages');
@@ -44,6 +61,7 @@ const BuyItems = () => {
   
   useEffect(() => {
     showItems();
+    handleLoad();
   }, []);
 
   const buyItems = async (id) => {
@@ -52,7 +70,7 @@ const BuyItems = () => {
     navigate('/viewItem');
   };
 
-  const showItems =() => {
+  const showItems = () => {
     
     let type = document.getElementById('B').options[document.getElementById('B').selectedIndex].innerHTML;
     let user = localStorage.getItem("user")

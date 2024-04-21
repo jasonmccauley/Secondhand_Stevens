@@ -23,9 +23,20 @@ const Landing = () => {
         objects : []
     })
   const handleLoad = () => {
-    setButtonText(localStorage.getItem("user"));
-    console.log("Started")
+    const user = localStorage.getItem("user");
     var email = localStorage.getItem("email")
+
+    
+    axios.post('/api/checkNot', {email, user})
+    .then((res) => {
+      setButtonText(
+          res.data.response
+      )
+    })
+
+    
+    
+    
     axios.post('/api/showHistoryBuy', {email})
       .then((res) => {
         changeChange({

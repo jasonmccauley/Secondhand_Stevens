@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -11,11 +11,23 @@ const SellItems = () => {
     const navigate = useNavigate();
     
 
+    
     const [buttonText, setButtonText] = useState(localStorage.getItem("user"));
+    useEffect(() => {
+      handleLoad();
+    }, []);
+  
     const handleLoad = () => {
-      setButtonText(localStorage.getItem("user"));
+      const user = localStorage.getItem("user");
+      var email = localStorage.getItem("email")
+      axios.post('/api/checkNot', {email, user})
+      .then((res) => {
+        console.log("COOL")
+        setButtonText(
+            res.data.response
+        )
+      })
     };
-    window.addEventListener('load', handleLoad);
 
     const ManageAccount = () => {
       navigate('/Messages');

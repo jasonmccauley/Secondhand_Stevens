@@ -64,9 +64,32 @@ app.post('/api/getMessages', (req, res) => {
   const { email } = req.body
   const d = new Date();
  
+
+  const databaseMes = new Datastore("accounts/" + email + "/mes.db")
+  databaseMes.loadDatabase()
+  var content = 0
+  databaseMes.find({},function(err,output){
+    content = output.length
+    console.log(content)
+    console.log("HERE IS")
+    fs.writeFile("accounts/" + email + "/count.txt", content.toString(), err => {
+      if (err) {
+        console.error(err);
+      } else {
+        // file written successfully
+      }
+    });
+
+
+  })
   
+
+
+  
+  
+
+
   try{
-    
       const databaseFrom = new Datastore("accounts/" + email + "/mes.db")
       databaseFrom.loadDatabase();
       databaseFrom.find({},function(err,output){
@@ -76,6 +99,8 @@ app.post('/api/getMessages', (req, res) => {
   catch{
     res.json({response: "File does not exist"})
   }
+
+  
   
   // Process message (e.g., log it)
   
@@ -223,8 +248,7 @@ app.post('/api/buyItem', (req, res) => {
     const amount = output[0]["price"]
     
     database.find({email:email},function(err,output){
-      console.log("FOUND OUTPUT")
-      console.log(output)
+      
       name = output[0]["username"]
       const databaseRec = new Datastore("accounts/" + email + "/mes.db")
       databaseRec.loadDatabase();
@@ -277,6 +301,57 @@ app.post('/api/showAllListings', (req, res) => {
   // Process message (e.g., log it)
   // Send back a response
 });
+
+
+
+
+app.post('/api/checkNot', (req, res) => {
+  // Retrieve message from request body
+  const {user} = req.body
+  const {email} = req.body
+
+
+  const databaseMes = new Datastore("accounts/" + email + "/mes.db")
+  databaseMes.loadDatabase()
+  content = 0
+  databaseMes.find({},function(err,output){
+    content = output.length
+    
+    try{
+      console.log("still here")
+      fs.readFile("accounts/" + email + "/count.txt", 'utf8', (err, data) => {
+        console.log("still here again")
+        if(parseInt(data) == content){
+          res.json({response:  user})
+        }
+        else{
+          res.json({response:  user + " || " + (content - parseInt(data)) + " New Messages"})
+        }
+      });
+    }
+      catch{
+      
+        if( content > 0){
+          res.json({response:  user + " | " + content + " New Messages"})
+        }
+        else{
+          res.json({response:  user})
+        }
+        
+      }
+
+
+  })
+  
+  
+
+
+
+  
+  // Process message (e.g., log it)
+  // Send back a response
+});
+
 
 
 app.post('/api/showHistoryBuy', (req, res) => {

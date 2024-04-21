@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {BrowserRouter, Routes, Route, Link} from "react-router-dom"
@@ -9,10 +9,27 @@ const Landing = () => {
 
   const [buttonText, setButtonText] = useState(localStorage.getItem("user"));
     
+
+  
+  useEffect(() => {
+    handleLoad();
+  }, []);
+
   const handleLoad = () => {
-    setButtonText(localStorage.getItem("user"));
+    const user = localStorage.getItem("user");
+    var email = localStorage.getItem("email")
+    axios.post('/api/checkNot', {email, user})
+    .then((res) => {
+      console.log("COOL")
+      setButtonText(
+          res.data.response
+      )
+    })
   };
-  window.addEventListener('load', handleLoad);
+
+
+  
+  
 
   const ManageAccount = () => {
     navigate('/Messages');
@@ -31,7 +48,7 @@ const Landing = () => {
   
 
   return (
-    <div className="landing-container">
+    <div className="landing-container" onLoad = {handleLoad}>
       <nav className="navbar">
         <div className="nav-header">
           <span>Welcome to Second Hand Stevens!</span>
