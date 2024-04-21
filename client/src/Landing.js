@@ -46,7 +46,7 @@ const Landing = () => {
       navigate('/');
     };
   
-
+// Main Page
   return (
     <div className="landing-container" onLoad = {handleLoad}>
       <nav className="navbar">

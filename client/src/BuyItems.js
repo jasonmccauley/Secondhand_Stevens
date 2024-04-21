@@ -16,6 +16,8 @@ const BuyItems = () => {
       objects : []
   })
 
+
+  //For logging out
   const handleLogout = (e) => {
     e.preventDefault();
     localStorage.setItem("user", "");
@@ -37,7 +39,7 @@ const BuyItems = () => {
 
 
   
-
+//This runs on load. This deals with checking for any new notifications
   const handleLoad = () => {
     const user = localStorage.getItem("user");
     var email = localStorage.getItem("email")
@@ -64,6 +66,8 @@ const BuyItems = () => {
     handleLoad();
   }, []);
 
+
+  //This zooms in on a specific object
   const buyItems = async (id) => {
     let _id = id
     localStorage.setItem("itemID", _id)
@@ -86,7 +90,7 @@ const BuyItems = () => {
       })
     }
     else{
-      axios.post('/api/showSortedListings', {type})
+      axios.post('/api/showSortedListings', {type, user})
       .then((res) => {
         
         changeChange({
@@ -122,17 +126,18 @@ const BuyItems = () => {
     console.log(e)
   }
 
-  // Function to handle filter change
+  
   const handleFilterChange = (e) => {
     setFilterCategory(e.target.value);
   };
 
-  // Filter items based on search query and selected category
+  
   const filteredItems = itemList.filter((item) =>
     (item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())) &&
     (!filterCategory || item.category === filterCategory)
   );
 
+  // Main Page
   return (
     <div className="buy-items-container">
       {/* Navigation bar */}

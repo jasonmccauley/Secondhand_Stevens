@@ -54,7 +54,7 @@ const SellItems = () => {
         axios.post('/api/listItem', {name, category, condition, description, price, photo, user, email})
           .then((res) => {
             if (res.data.response === "Item Listed") {
-              navigate('/Landing'); // Redirect to the Landing page
+              navigate('/Messages'); // Redirect to the Landing page
             } else {
               console.log('Account creation failed'); // Handle error as needed
               // Set a state variable to display an error message to the user
@@ -91,7 +91,7 @@ const SellItems = () => {
     const formData = { item, category, condition, description, price, image };
     const newItemList = [...itemList, formData];
     setItemList(newItemList);
-    navigate('/buyItems', { state: { itemList: newItemList } });
+    navigate('/Messages', { state: { itemList: newItemList } });
     setSuccessMessage('Your item has been successfully listed!');
   };
 
@@ -126,18 +126,18 @@ const SellItems = () => {
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      // Set the image data in the state variable
+      
       setImageData(reader.result);
     };
     
-    reader.readAsDataURL(file); // Read the file as data URL
+    reader.readAsDataURL(file); 
 
    
   };
 
   console.log('Image data:', imageData);
   
-
+// Main Page
   return (
     <div className="sell-items-container">
       <div className="navbar">

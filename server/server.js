@@ -7,14 +7,15 @@ app.use(bodyParser.json({limit:1024*1024*20, type:'application/json'}));
 app.use(bodyParser.urlencoded({extended:true,limit:1024*1024*20,type:'application/x-www-form-urlencoding' }));
 
 
+//This changes the Size for the photos
 app.set('server', {
-    maxHeaderSize: 100 * 1024, // 16KB, adjust as needed
+    maxHeaderSize: 100 * 1024, 
   });
 const PORT = 8080;
 
 var cors = require('cors')
 
-app.use(cors()) // Use this after the variable declaration
+app.use(cors()) 
 
 
 app.use(bodyParser.json());
@@ -34,9 +35,9 @@ var fs = require('fs');
 const listDatabase = new Datastore("list.db")
 listDatabase.loadDatabase();
 
-// Route to handle button press request
+// This is the function that creates an account
 app.post('/api/createAccount', (req, res) => {
-  // Retrieve message from request body
+  
   const { username } = req.body;
   const { password } = req.body
   const { email } = req.body
@@ -46,20 +47,18 @@ app.post('/api/createAccount', (req, res) => {
       res.json({ response: 'Account already exist',  username:" FAILED LOGIN!! "});
     }
     else{
-      fs.mkdirSync("accounts/" + username);
+      fs.mkdirSync("accounts/" + email);
       database.insert({username: username, password:password, email:email})
       res.json({ response: 'Account Created', username:username, email:email});
     }
   })
-  // Process message (e.g., log it)
-  
-  // Send back a response
+
 });
 
 
-// Route to handle button press request
+// This gets the messages for the user to review
 app.post('/api/getMessages', (req, res) => {
-  // Retrieve message from request body
+
   const { user } = req.body;
   const { email } = req.body
   const d = new Date();
@@ -76,7 +75,7 @@ app.post('/api/getMessages', (req, res) => {
       if (err) {
         console.error(err);
       } else {
-        // file written successfully
+        
       }
     });
 
@@ -99,17 +98,10 @@ app.post('/api/getMessages', (req, res) => {
   catch{
     res.json({response: "File does not exist"})
   }
-
-  
-  
-  // Process message (e.g., log it)
-  
-  // Send back a response
 });
 
-// Route to handle button press request
+//This sends a message
 app.post('/api/sendMessage', (req, res) => {
-  // Retrieve message from request body
   const { user } = req.body;
   const { rec } = req.body
   const { email } = req.body
@@ -134,16 +126,11 @@ app.post('/api/sendMessage', (req, res) => {
       res.json({ response: 'User Not Found'});
     }
   })
-  // Process message (e.g., log it)
-  
-  // Send back a response
 });
 
 
-// Route to handle button press request
+// Outdated Code; Please ignore
 app.post('/api/getOrders', (req, res) => {
-  // Retrieve message from request body
-
   const { username } = req.body;
   const { password } = req.body
   const { email } = req.body
@@ -157,9 +144,6 @@ app.post('/api/getOrders', (req, res) => {
       res.json({ response: 'Account Created', username:username });
     }
   })
-  // Process message (e.g., log it)
-
-  // Send back a response
 });
 
 
@@ -176,10 +160,8 @@ app.use(function(req, res, next) {
 
 
 
-
+// This logs the user in
 app.post('/api/logIn', (req, res) => {
-  // Retrieve message from request body
-
   const { email } = req.body
   const { password } = req.body
   database.find({email:email},function(err,output){
@@ -196,17 +178,14 @@ app.post('/api/logIn', (req, res) => {
       res.json({ response: 'Account does not exist ', username: "ACCOUNT DOES NOT EXIST", email:"None" });
     }
   })
-  // Process message (e.g., log it)
-  // Send back a response
 });
 
 
-
+  // This also increases the max limit for photo uploads
 app.use(bodyParser.json({ limit: '100mb' }));
-app.post('/api/listItem', (req, res) => {
 
-  
-  // Retrieve message from request body
+//This puts an item up for listing
+app.post('/api/listItem', (req, res) => {
   const { name } = req.body
   const { category } = req.body
   const { condition } = req.body
@@ -215,23 +194,22 @@ app.post('/api/listItem', (req, res) => {
   const { photo } = req.body
   const { user } = req.body
   const { email } = req.body
- 
-  
+
   listDatabase.insert({name: name, category:category, condition:condition, description:description, price:price, photo:photo, user:user, email:email})
+
+  var d = new Date();
+  const databaseRec = new Datastore("accounts/" + email + "/mes.db")
+  databaseRec.loadDatabase();
+  databaseRec.insert({sortBy:d.getTime(), mes: "Your " + name + " has been approved for pickup. Please send the item to the Stevens Duck Store as soon as possible", from:"Second Hand Stevens", to:user, time:d})
+
   res.json({ response: 'Item Listed' });
-  // Process message (e.g., log it)
-  // Send back a response
 });
 
-
-app.post('/api/buyItem', (req, res) => {
-  // Retrieve message from request body
-  
+ //This is when the user wants to buy the item
+app.post('/api/buyItem', (req, res) => {  
   const {_id} = req.body
   const {buyer} = req.body
-  
   var found = false;
-
   var d = new Date()
   listDatabase.find({_id:_id},function(err,output){
   
@@ -290,7 +268,7 @@ app.post('/api/buyItem', (req, res) => {
 
   
 
-
+//This shows all available items for purchase
 app.post('/api/showAllListings', (req, res) => {
   // Retrieve message from request body
   const {user} = req.body
@@ -304,9 +282,8 @@ app.post('/api/showAllListings', (req, res) => {
 
 
 
-
+//This checks to see if there are any new notifications that the user needs to check
 app.post('/api/checkNot', (req, res) => {
-  // Retrieve message from request body
   const {user} = req.body
   const {email} = req.body
 
@@ -320,20 +297,30 @@ app.post('/api/checkNot', (req, res) => {
     try{
       console.log("still here")
       fs.readFile("accounts/" + email + "/count.txt", 'utf8', (err, data) => {
-        console.log("still here again")
-        if(parseInt(data) == content){
+        console.log(content)
+        var replace = 0
+        if(isNaN(parseInt(data))){
+          replace = 0
+        }
+        else{
+          replace = parseInt(data)
+        }
+        console.log(replace)
+        console.log("HeRE")
+        if(replace== content){
           res.json({response:  user})
         }
         else{
-          res.json({response:  user + " || " + (content - parseInt(data)) + " New Messages"})
+          res.json({response:  user + " || " + (content - replace) + " New Messages"})
         }
       });
     }
       catch{
       
-        if( content > 0){
+        if( content > 0 && content != null){
+          console.log(content)
           res.json({response:  user + " | " + content + " New Messages"})
-        }
+        } 
         else{
           res.json({response:  user})
         }
@@ -345,18 +332,11 @@ app.post('/api/checkNot', (req, res) => {
   
   
 
-
-
-  
-  // Process message (e.g., log it)
-  // Send back a response
 });
 
 
-
+//This shows the buy history
 app.post('/api/showHistoryBuy', (req, res) => {
-  // Retrieve message from request body
-  
   const {email} = req.body
   const databaseSell = new Datastore("accounts/" + email + "/buy.db")
   databaseSell.loadDatabase();
@@ -364,13 +344,12 @@ app.post('/api/showHistoryBuy', (req, res) => {
   databaseSell.find({},function(err,output){
     res.json({response:  output})
   })
-  // Process message (e.g., log it)
-  // Send back a response
+
 });
 
+
+//This shows the sell history to the user
 app.post('/api/showHistorySell', (req, res) => {
-  // Retrieve message from request body
-  
   const {email} = req.body
   const databaseSell = new Datastore("accounts/" + email + "/sell.db")
   databaseSell.loadDatabase();
@@ -378,32 +357,25 @@ app.post('/api/showHistorySell', (req, res) => {
   databaseSell.find({},function(err,output){
     res.json({response:  output})
   })
-  // Process message (e.g., log it)
-  // Send back a response
+
 });
 
 
+//This is when the user selects an item to buy, it will show it without anything else
 app.post('/api/showItem', (req, res) => {
-  // Retrieve message from request body
-  
   const {_id} = req.body
   listDatabase.find({_id: _id},function(err,output){
     res.json({response:  output[0]})
   })
-  // Process message (e.g., log it)
-  // Send back a response
 });
 
-
+//This is where the user is only searching for a specific item
 app.post('/api/Search', (req, res) => {
-  // Retrieve message from request body
   const { searchWord } = req.body
   const { category } = req.body
   const { user } = req.body
- 
   if(category == "All Categories"){
   listDatabase.find({name:{$ne: user}},function(err,output){
-
     last = []
     for (let i = 0; i < output.length; i++) {
       if(output[i]["name"].toLowerCase().includes(searchWord.toLowerCase()) && output[i]["user"] != user){
@@ -426,30 +398,26 @@ else{
     res.json({response:  last})
   })
 }
-  
-  // Process message (e.g., log it)
-  // Send back a response
 });
 
 
-
+//This is showing all the items that fit within a sorted list
 app.post('/api/showSortedListings', (req, res) => {
   // Retrieve message from request body
   const { type } = req.body
-
-  listDatabase.find({category: type},function(err,output){
+  const { user } = req.body
+  listDatabase.find({category: type, user:{$ne: user}},function(err,output){
     res.json({response:  output})
   })
   
-  // Process message (e.g., log it)
-  // Send back a response
+
 });
 
 
 
-// Fixing "413 Request Entity Too Large" errors
 
 
+//This creates the port
 app.listen(PORT, () => {
   console.log("Server is running on port ${PORT}");
 });
