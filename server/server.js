@@ -46,9 +46,7 @@ app.post('/api/createAccount', (req, res) => {
       res.json({ response: 'Account already exist',  username:" FAILED LOGIN!! "});
     }
     else{
-
       fs.mkdirSync("accounts/" + username);
-
       database.insert({username: username, password:password, email:email})
       res.json({ response: 'Account Created', username:username, email:email});
     }
@@ -59,6 +57,30 @@ app.post('/api/createAccount', (req, res) => {
 });
 
 
+// Route to handle button press request
+app.post('/api/getMessages', (req, res) => {
+  // Retrieve message from request body
+  const { user } = req.body;
+  const { email } = req.body
+  const d = new Date();
+  console.log("started")
+  
+  try{
+    console.log("accounts/" + email + "/mes.db")
+      const databaseFrom = new Datastore("accounts/" + email + "/mes.db")
+      databaseFrom.loadDatabase();
+      databaseFrom.find({},function(err,output){
+        res.json({ response: "Message Sent", info:output});
+      })
+  }
+  catch{
+    res.json({response: "File does not exist"})
+  }
+  
+  // Process message (e.g., log it)
+  
+  // Send back a response
+});
 
 // Route to handle button press request
 app.post('/api/sendMessage', (req, res) => {
@@ -185,7 +207,7 @@ app.post('/api/buyItem', (req, res) => {
   console.log(_id)
   var found = false;
 
-
+  var d = new Date()
   listDatabase.find({_id:_id},function(err,output){
     console.log(output)
     console.log("STARTED")
@@ -196,9 +218,29 @@ app.post('/api/buyItem', (req, res) => {
     const databaseSell = new Datastore("accounts/" + email + "/sell.db")
     databaseSell.loadDatabase();
     databaseSell.insert(output[0])
-    const databaseBuy = new Datastore("accounts/" + buyer + "/buy.db")
+
+    var name = ""
+    database.find({email:email},function(err,output){
+      name = output[0]["username"]
+    })
+
+    var buyerName = ""
+    database.find({email:buyer},function(err,output){
+      buyerName = output[0]["username"]
+    })
+
+    const databaseRec = new Datastore("accounts/" + email + "/mes.db")
+    databaseRec.loadDatabase();
+    databaseRec.insert({mes: "Your " + output[0]["name"] + " was Purchased. The money will be deposited within 3-5 buisness days", from:"Second Hand Stevens", to:name, time:d})
+
+    const databaseBuy = new Datastore("accounts/" + buyer + "/mes.db")
     databaseBuy.loadDatabase();
-    databaseBuy.insert(output[0])
+    databaseBuy.insert({mes: "Purchase Confirmation for the " + output[0]["name"] + ". Your account will be charged " + output[0]["price"] + "$. If you think this is an error, please contact support at secondhand@stevens.edu", from:"Second Hand Stevens", to:buyerName, time:d})
+
+    const databaseBuyer = new Datastore("accounts/" + buyer + "/buy.db")
+    databaseBuyer.loadDatabase();
+    databaseBuyer.insert(output[0])
+    
     })
 
 

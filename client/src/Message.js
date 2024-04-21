@@ -25,16 +25,25 @@ const Messages = () => {
     const [appStateSell, changeChangeSell] = useState({
         objects : []
     })
+
+
   const handleLoad = () => {
+    var user = localStorage.getItem("user")
+    var email = localStorage.getItem("email")
+        
     setButtonText(localStorage.getItem("user"));
-    /*
-      axios.post('/api/findMessages', {email})
+    axios.post('/api/getMessages', {email, user})
       .then((res) => {
-        changeChangeSell({
-            objects : res.data.response
-        })
+        if(res.data.response == "Message Sent"){
+            console.log(res.data.info)
+            changeChange({
+                objects : res.data.info
+            })
+        }
+        else{
+            console.log(res.data.response)
+        }
       })
-      */
   };
   window.addEventListener('load', handleLoad);
 

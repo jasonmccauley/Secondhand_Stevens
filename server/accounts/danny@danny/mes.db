@@ -1,17 +1,2 @@
-{"mes":"test","from":"danny","to":"bob","time":{"$$date":1713681957118},"_id":"3WVL423sPBICpz69"}
-{"mes":"This is a test message","to":"danny","from":"bob","time":{"$$date":1713681930106},"_id":"8JzVCsprhVdZ1eMB"}
-{"mes":"This is a test message","from":"danny","to":"bob","time":{"$$date":1713681930106},"_id":"8yGq5OPiRKPSBW1z"}
-{"mes":"This is a test message","to":"danny","from":"bob","time":{"$$date":1713681926152},"_id":"Eg5KfiOkbpBDZr8O"}
-{"mes":"This is a test message","from":"danny","to":"bob","time":{"$$date":1713681926152},"_id":"K1NqWgBkLAArdqAz"}
-{"mes":"test","to":"danny","from":"bob","time":{"$$date":1713681957118},"_id":"OlKoDrV6ckeMLScg"}
-{"mes":"testing","from":"danny","to":"bob","time":{"$$date":1713682010879},"_id":"PYsI5JaDUe7rTi7w"}
-{"mes":"testing","to":"danny","from":"bob","time":{"$$date":1713682010879},"_id":"STzqSi0KwoGpROWl"}
-{"mes":"test","to":"danny","from":"bob","time":{"$$date":1713681940785},"_id":"XH6OMJoganZVVTEC"}
-{"mes":"testing","from":"danny","to":"bob","time":{"$$date":1713682129412},"_id":"by3ngtPN6aKIS2EC"}
-{"mes":"test","from":"danny","to":"bob","time":{"$$date":1713681940785},"_id":"iWAhILwkJTTC9Q5n"}
-{"mes":"This is a test message","to":"danny","from":"bob","time":{"$$date":1713681928119},"_id":"j7McBm9AFCcFHz7B"}
-{"mes":"test","from":"danny","to":"bob","time":{"$$date":1713681969127},"_id":"mFK1IxDbV4fVBN7O"}
-{"mes":"This is a test message","from":"danny","to":"bob","time":{"$$date":1713681928119},"_id":"oYGDnvhwy4ZfkiQr"}
-{"mes":"testing","to":"danny","from":"bob","time":{"$$date":1713682129412},"_id":"qyHiWfDS8fovfzpm"}
-{"mes":"test","to":"danny","from":"bob","time":{"$$date":1713681969127},"_id":"vXtyum6Gf0UORsPE"}
-{"mes":"testing","from":"danny","to":"bob","time":{"$$date":1713682185850},"_id":"XrRGYYPeQxBMFfh3"}
+{"mes":"Purchase Confirmation for the item. Your account will be charged 43. If you think this is an error, please contact support at secondhand@stevens.edu","from":"Second Hand Stevens","to":"","time":{"$$date":1713684834154},"_id":"AcUeCiUEu2uLL0Jk"}
+{"mes":"this is a test message","from":"danny","to":"bob","time":{"$$date":1713684929432},"_id":"8gBATRrUYJ7P848M"}
