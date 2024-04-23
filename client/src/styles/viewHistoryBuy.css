@@ -1,53 +1,54 @@
 .landing-container {
-    padding: 20px;
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: maroon; /* Color scheme */
-    padding: 10px 20px;
-  }
-  
-  .nav-header {
-    font-size: 1.5rem;
-    color: white; /* Color scheme */
-  }
-  
-  .nav-links {
-    font-size: 1rem;
-  }
-  
-  .logout-btn {
-    background-color: transparent;
-    border: none;
-    color: white; /* Color scheme */
-    cursor: pointer;
-  }
-  
-  .content {
-    margin-top: 20px;
-  }
-  
-  .title {
-    font-size: 1.5rem;
-  }
-  
-  .action-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .action-button {
-    padding: 10px 20px;
-    background-color: maroon; /* Color scheme */
-    color: white; /* Color scheme */
-    text-decoration: none;
-    border-radius: 5px;
-  }
-  
-  .action-button:hover {
-    background-color: #800000; /* Darker shade of maroon on hover */
-  }
+  padding: 20px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: maroon;
+  color: white;
+  padding: 10px 20px;
+}
+
+.nav-header {
+  font-size: 1.5rem;
+}
+
+.nav-links {
+  font-size: 1rem;
+}
+
+.logout-btn {
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.content {
+  margin-top: 20px;
+}
+
+.history-container {
+  display: flex;
+  gap: 20px;
+}
+
+.history-column {
+  flex: 1;
+}
+
+.history-item {
+  border: 2px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.history-item img {
+  max-width: 150px; /* Adjust width of images */
+}
+
+.title {
+  font-size: 2rem; /* Increase font size for titles */
+}

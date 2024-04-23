@@ -142,9 +142,9 @@ const BuyItems = () => {
     <div className="buy-items-container">
       {/* Navigation bar */}
       <div className="navbar">
-        <div className="nav-title" >Buy</div>
-        <div className="nav-filter" >
-          <select id="B" onChange={showItems} onLoad = {showItems}>
+        <div className="nav-title">Buy</div>
+        <div className="nav-filter">
+          <select id="B" onChange={showItems} onLoad={showItems}>
             <option value="">All Categories</option>
             <option value="Books">Books</option>
             <option value="Clothing">Clothing</option>
@@ -153,7 +153,7 @@ const BuyItems = () => {
             <option value="Furniture">Furniture</option>
           </select>
         </div>
-        
+  
         <div className="nav-search">
           <input
             type="text"
@@ -162,62 +162,60 @@ const BuyItems = () => {
             onChange={handleSearchChange}
           />
         </div>
-
-        
-        
-        
+  
         <div className="nav-links">
-          <button className="logout-btn" onClick={ManageAccount}>{buttonText} ||</button>
-          <button className="logout-btn" onClick={handleLogout}>Log Out ||</button>
-          <button className="logout-btn" onClick={handleBack}>Go Back ||</button>
+          <button className="logout-btn" onClick={ManageAccount}>
+            {buttonText} ||
+          </button>
+          <button className="logout-btn" onClick={handleLogout}>
+            Log Out ||
+          </button>
+          <button className="logout-btn" onClick={handleBack}>
+            Go Back ||
+          </button>
         </div>
-
-    
-       
-
-      
       </div>
-      
-
-      <br></br><br></br><br></br>
-      {appState.objects.map((elements,index) => (
-        
-        <div key={index}> 
-        
-        
-        <img src={appState.objects[index]["photo"]} alt="Preview" style={{ maxWidth: '100%' }} /><br></br>
-        
-        Name: {appState.objects[index]["name"]} <br></br>
-        Price: {appState.objects[index]["price"]} <br></br>
-        Description: {appState.objects[index]["description"]} <br></br>
-        Condition: {appState.objects[index]["condition"]} <br></br>
-        Category: {appState.objects[index]["category"]} <br></br>
-        Seller: {appState.objects[index]["user"]} <br></br>
-        
-        <button onClick={() => buyItems(appState.objects[index]["_id"])}>Buy Now!</button>
-        
-        <br></br><br></br>
-
-        
-       
-        
-        
+  
+      <br></br>
+      <br></br>
+      <br></br>
+      {appState.objects.map((element, index) => (
+        <div key={index} className="item">
+          <img
+            src={appState.objects[index]["photo"]}
+            alt="Preview"
+            className="item-image"
+          />
+          <div className="item-details">
+            <div className="item-name">{appState.objects[index]["name"]}</div>
+            <div className="item-price">
+              Price: {appState.objects[index]["price"]}
+            </div>
+            <div className="item-description">
+              Description: {appState.objects[index]["description"]}
+            </div>
+            <div className="item-condition">
+              Condition: {appState.objects[index]["condition"]}
+            </div>
+            <div className="item-category">
+              Category: {appState.objects[index]["category"]}
+            </div>
+            <div className="item-seller">
+              Seller: {appState.objects[index]["user"]}
+            </div>
+            <button
+              className="buy-button"
+              onClick={() => buyItems(appState.objects[index]["_id"])}
+              style = {{marginBottom: '10px'}}
+            >
+              Buy Now
+            </button>
+          </div>
         </div>
-        
-        ))
-
-        }
-
-      
-
-      
-      
-      
-      
-      
+      ))}
     </div>
-    
   );
+  
 };
 
 export default BuyItems;

@@ -1,53 +1,64 @@
 .landing-container {
-    padding: 20px;
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: maroon; /* Color scheme */
-    padding: 10px 20px;
-  }
-  
-  .nav-header {
-    font-size: 1.5rem;
-    color: white; /* Color scheme */
-  }
-  
-  .nav-links {
-    font-size: 1rem;
-  }
-  
-  .logout-btn {
-    background-color: transparent;
-    border: none;
-    color: white; /* Color scheme */
-    cursor: pointer;
-  }
-  
-  .content {
-    margin-top: 20px;
-  }
-  
-  .title {
-    font-size: 1.5rem;
-  }
-  
-  .action-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .action-button {
-    padding: 10px 20px;
-    background-color: maroon; /* Color scheme */
-    color: white; /* Color scheme */
-    text-decoration: none;
-    border-radius: 5px;
-  }
-  
-  .action-button:hover {
-    background-color: #800000; /* Darker shade of maroon on hover */
-  }
+  padding: 20px;
+  background-color: white; /* Change background color to white */
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: maroon;
+  color: white; /* Change text color to white */
+  padding: 10px 20px;
+}
+
+.nav-header {
+  font-size: 1.5rem;
+}
+
+.nav-links {
+  font-size: 1rem;
+}
+
+.logout-btn {
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.content {
+  margin-top: 20px;
+}
+
+.title {
+  font-size: 1.5rem;
+  color: maroon; /* Change title color to maroon */
+}
+
+.form-label {
+  font-size: 0.9rem; /* Adjust font size for form labels */
+  color: #666; /* Light gray color for form labels */
+}
+
+.message-container {
+  border: 5px solid #ccc; /* Update border width to 1px */
+  margin-bottom: 20px;
+}
+
+.send-message-container {
+  display: flex;
+  flex-direction: column;
+  border: 5px solid #ccc; /* Update border width to 1px */
+  margin-bottom: 20px;
+}
+
+.send-message-container h1,
+.message-container h1 {
+  color: maroon; /* Change title color to maroon */
+  margin-bottom: 10px;
+}
+
+.error-message {
+  color: red; /* Change error message color to red */
+}

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import {Dimensions} from 'react-native';
 import axios from 'axios';
 import {BrowserRouter, Routes, Route, Link} from "react-router-dom"
-import './styles/landing.css'; // Import CSS file from styles folder
+import './styles/viewHistoryBuy.css'; // Import CSS file from styles folder
 
 const Landing = () => {
 
@@ -81,66 +81,57 @@ const Landing = () => {
       };
   
 
-  return (
-    <div className="landing-container" style={{padding:"0px"}}>
-      <nav className="navbar" style={{borderColor:"white", margin:"20px"}}>
-        <div className="nav-header">
-          <span>History Page</span>
-        </div>
-        <div className="nav-links">
-        <button className="logout-btn" onClick={handleMessage}>Send Message ||</button>
-          <button className="logout-btn" onClick={ManageAccount}>{buttonText} ||</button>
-          <button className="logout-btn" onClick={handleLogout}>Log Out ||</button>
-          <button className="logout-btn" onClick={handleBack}>Go Back ||</button>
-        </div>
-      </nav>
-      <div className="content">
-        
-        
-      </div>
-      <br></br><br></br><br></br>
+      return (
+        <div className="landing-container">
+          <nav className="navbar">
+            <div className="nav-header">
+              <span>Purchase History</span>
+            </div>
+            <div className="nav-links">
+              <button className="logout-btn" onClick={handleMessage}>Send Message ||</button>
+              <button className="logout-btn" onClick={ManageAccount}>{buttonText} ||</button>
+              <button className="logout-btn" onClick={handleLogout}>Log Out ||</button>
+              <button className="logout-btn" onClick={handleBack}>Go Back ||</button>
+            </div>
+          </nav>
       
+          <div className="content"></div>
       
-      <div className="nav-header" style={{padding:"0px"}} ></div>
-      <div style={{display:"flex", "flex-direction" : "row", width:Dimensions.get('window').width}}>
+          <div className="history-container">
+            <div className="history-column">
+              <h1 className="title">Items Bought</h1>
+              {appState.objects.map((elements, index) => (
+                <div key={index} className="history-item">
+                  <img src={appState.objects[index]["photo"]} alt="Preview" />
+                  <br></br>
+                  Name: {appState.objects[index]["name"]} <br></br>
+                  Price: {appState.objects[index]["price"]} <br></br>
+                  Description: {appState.objects[index]["description"]} <br></br>
+                  Condition: {appState.objects[index]["condition"]} <br></br>
+                  Category: {appState.objects[index]["category"]} <br></br>
+                  Seller: {appState.objects[index]["user"]} <br></br>
+                </div>
+              ))}
+            </div>
       
-      <div style={{display:"flex", "flex-direction" : "column", "border": "20px solid #ccc", borderColor:"red", width:(Dimensions.get('window').width)/2}}>
-      <h1>Buying History</h1>
-      {appState.objects.map((elements,index) => (
-        <div style={{ width:"100%", display:"flex", "flex-direction" : "column" }}> 
-        <img src={appState.objects[index]["photo"]} alt="Preview" style={{ maxWidth: '100%' }} /><br></br>
-        Name: {appState.objects[index]["name"]} <br></br>
-        Price: {appState.objects[index]["price"]} <br></br>
-        Description: {appState.objects[index]["description"]} <br></br>
-        Condition: {appState.objects[index]["condition"]} <br></br>
-        Category: {appState.objects[index]["category"]} <br></br>
-        Seller: {appState.objects[index]["user"]} <br></br>
-        ----------------------------------------------------------------------------
-        <br></br><br></br>
+            <div className="history-column">
+              <h1 className="title">Items Sold</h1>
+              {appStateSell.objects.map((elements, index) => (
+                <div key={index} className="history-item">
+                  <img src={appStateSell.objects[index]["photo"]} alt="Preview" />
+                  <br></br>
+                  Name: {appStateSell.objects[index]["name"]} <br></br>
+                  Price: {appStateSell.objects[index]["price"]} <br></br>
+                  Description: {appStateSell.objects[index]["description"]} <br></br>
+                  Condition: {appStateSell.objects[index]["condition"]} <br></br>
+                  Category: {appStateSell.objects[index]["category"]} <br></br>
+                  Seller: {appStateSell.objects[index]["user"]} <br></br>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        ))
-        }
-    </div>
-    <div style={{display:"flex", "flex-direction" : "column", "border": "20px solid #ccc", borderColor:"red", width:(Dimensions.get('window').width)/2}}>
-    <h1>Selling History</h1>
-        {appStateSell.objects.map((elements,index) => (
-        <div style={{ width:"100%"}}> 
-        <img src={appStateSell.objects[index]["photo"]} alt="Preview" style={{ maxWidth: '100%' }} /><br></br>
-        Name: {appStateSell.objects[index]["name"]} <br></br>
-        Price: {appStateSell.objects[index]["price"]} <br></br>
-        Description: {appStateSell.objects[index]["description"]} <br></br>
-        Condition: {appStateSell.objects[index]["condition"]} <br></br>
-        Category: {appStateSell.objects[index]["category"]} <br></br>
-        Seller: {appStateSell.objects[index]["user"]} <br></br>
-        ----------------------------------------------------------------------------
-        <br></br><br></br>
-        </div>
-        ))
-        }
-        </div>
-        </div>
-    </div>
-  );
+      );
 };
 
 export default Landing;

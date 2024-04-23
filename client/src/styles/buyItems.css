@@ -16,7 +16,7 @@
   position: absolute; /* Use absolute positioning */
   top: calc(100% + 10px); /* Position below the navbar */
   right: 20px; /* Adjust horizontal position */
-  width:200px
+  width: 200px;
 }
 
 .nav-filter select {
@@ -46,7 +46,7 @@
 }
 
 .buy-items-container {
-  max-width: 600px;
+  max-width: 800px; /* Adjust max-width */
   margin: 0 auto;
   padding: 20px;
 }
@@ -61,8 +61,8 @@
 }
 
 .item-image {
-  width: 100px;
-  height: 100px;
+  width: 225px; /* Adjust image size */
+  height: 225px; /* Adjust image size */
   margin-right: 20px;
 }
 
@@ -78,4 +78,22 @@
 .item-condition,
 .item-price {
   margin-top: 5px;
+}
+
+.item-seller {
+  margin-bottom: 10px; /* Add space between "Seller" line and button */
+}
+
+.buy-button {
+  padding: 12px 24px; /* Adjust button padding */
+  font-size: 1.1rem; /* Increase text size */
+  background-color: maroon; /* Change button color */
+  color: white; /* Change text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.buy-button:hover {
+  background-color: #800000; /* Darker shade of maroon on hover */
 }

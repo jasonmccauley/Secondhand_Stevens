@@ -101,10 +101,10 @@ const Messages = () => {
       
 
   return (
-    <div className="landing-container" style={{padding:"0px"}}>
-      <nav className="navbar" style={{borderColor:"white", margin:"20px"}}>
-        <div className="nav-header" >
-          <span>THIS IS THE MESSAGE PAGE!</span>
+    <div className="landing-container">
+      <nav className="navbar">
+        <div className="nav-header">
+          <span>Account</span>
         </div>
         <div className="nav-links">
           <button className="logout-btn" onClick={ManageAccount}>{buttonText} || View Purchase History ||</button>
@@ -113,53 +113,47 @@ const Messages = () => {
         </div>
       </nav>
       <div className="content">
-        
-        
+        {/* Content goes here */}
       </div>
-      <br></br><br></br><br></br>
-      
-      
-      <div className="nav-header" style={{padding:"0px", width:(Dimensions.get('window').width)}} ></div>
-      <div style={{display:"flex", "flex-direction" : "column", "border": "20px solid #ccc", borderColor:"red", width:((Dimensions.get('window').width - 40))}}>
-      <div style={{display:"flex", "flex-direction" : "row"}}>
-        <h1>Send Message</h1>
-        <div><h4>{errorMes}</h4></div>
+      <br/><br/><br/>
+      <div className="send-message-container">
+  <h1>Send Message</h1>
+  <div style={{ marginBottom: "10px" }}>
+    <label className="form-label">Username:</label>
+    <input
+      type="text"
+      id="A"
+      value={item}
+      onChange={(e) => setItem(e.target.value)}
+      placeholder="Enter Username"
+    />
+  </div>
+  {errorMes && <p className="error-message">User not found</p>} {/* Conditionally render error message */}
+  <div style={{ marginBottom: "10px" }}>
+    <label className="form-label">Message:</label>
+    <textarea
+      placeholder="Enter Message"
+      id="B"
+    ></textarea>
+  </div>
+  <button type="submit" className="btn" onClick={handleMessage}>Send Message</button>
+</div>
+
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <div className="message-container">
+          <h1>Message Log</h1>
+          {appState.objects.map((elements, index) => (
+            <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
+              To: {appState.objects[index]["to"]} <br />
+              From: {appState.objects[index]["from"]} <br />
+              Message: {appState.objects[index]["mes"]} <br />
+              Time: {appState.objects[index]["time"]} <br />
+              ----------------------------------------------------------------------------
+              <br /><br />
+            </div>
+          ))}
+        </div>
       </div>
-      
-      <input
-                type="text"
-                id="A"
-                value={item}
-                onChange={(e) => setItem(e.target.value)}
-                placeholder="Enter Username"
-        />
-            <textarea
-            placeholder="Enter Message"
-                id="B"
-            ></textarea>
-            <button type="submit" className="btn" onClick = {handleMessage}>Send Message</button>
-    </div>
-
-
-      <div style={{display:"flex", "flex-direction" : "row", width:Dimensions.get('window').width}}>
-      
-      <div style={{display:"flex", "flex-direction" : "column", "border": "20px solid #ccc", borderColor:"red", width:(Dimensions.get('window').width)}}>
-      <h1>Message Log:</h1>
-      {appState.objects.map((elements,index) => (
-        <div style={{ width:"100%", display:"flex", "flex-direction" : "column" }}> 
-        To: {appState.objects[index]["to"]} <br></br>
-        From: {appState.objects[index]["from"]} <br></br>
-        Message: {appState.objects[index]["mes"]} <br></br>
-        Time: {appState.objects[index]["time"]} <br></br>
-        
-        ----------------------------------------------------------------------------
-        <br></br><br></br>
-        </div>
-        ))
-        }
-    </div>
-    
-        </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, createSearchParams } from 'react-router-dom';
 import axios from 'axios';
-import './styles/buyItems.css'; // Import CSS file for BuyItems page
+import './styles/viewItem.css'; // Import CSS file for BuyItems page
 
 const BuyItems = () => {
   
@@ -163,48 +163,27 @@ const BuyItems = () => {
       {/* Navigation bar */}
       <div className="navbar">
         <div className="nav-title" >View Item</div>
-        <div className="nav-filter" style={{ color: 'black' }}>
-          {Right}
+        <div className="nav-filter">{Right}</div>
+        <div className="nav-search">
+          <div className="item-details">
+            <div className="item-name" style={{ color: 'black', fontSize: '1.5rem', fontWeight: 'bold' }}>{Name}</div>
+            <div className="item-price" style={{ color: 'black', fontSize: '1rem', marginBottom: '5px' }}>Price: {Price}</div>
+            <div className="item-description" style={{ color: 'black', fontSize: '1rem', marginBottom: '5px' }}>Description: {Description}</div>
+            <div className="item-condition" style={{ color: 'black', fontSize: '1rem', marginBottom: '5px' }}>Condition: {Condition}</div>
+            <div className="item-seller" style={{ color: 'black', fontSize: '1rem', marginBottom: '5px' }}>Seller: {Seller}</div>
+            <button className="confirm-purchase-btn" onClick={() => completePurchase(localStorage.getItem("itemID"))}>Confirm Purchase</button>
+          </div>
         </div>
-        
-        <div className="nav-search" style={{ color: 'black', width:"300px" , wordWrap: "break-word"}}>
-          Name: {Name} <br></br>
-          Price: {Price}<br></br>
-          Description: {Description} <br></br>
-          Condition: {Condition} <br></br>
-          Seller: {Seller} <br></br>
-          {Buy}
-        </div>
-
-        
-        
-        
         <div className="nav-links">
           <button className="logout-btn" onClick={ManageAccount}>{buttonText} ||</button>
           <button className="logout-btn" onClick={handleLogout}>Log Out ||</button>
           <button className="logout-btn" onClick={handleBack}>Go Back ||</button>
         </div>
-
-    
-       
-
-      
       </div>
-      
-
-      <br></br><br></br><br></br>
-      
-
-      
-
-      
-      
-      
-      
-      
     </div>
-    
   );
+  
+  
 };
 
 export default BuyItems;
