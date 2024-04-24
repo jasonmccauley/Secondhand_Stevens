@@ -20,6 +20,7 @@ const Messages = () => {
     })
 
     const handleBack = (e) => {
+        clearInterval()
         navigate('/landing');
     };
 
@@ -31,10 +32,11 @@ const Messages = () => {
   const handleLoad = () => {
     var user = localStorage.getItem("user")
     var email = localStorage.getItem("email")
-        
     setButtonText(localStorage.getItem("user"));
+    console.log("STARTED")
     axios.post('/api/getMessages', {email, user})
       .then((res) => {
+        console.log(res)
         if(res.data.response == "Message Sent"){
             console.log(res.data.info)
             var list = res.data.info.sort(function(a, b) {return parseFloat(b.sortBy) - parseFloat(a.sortBy);})
@@ -51,14 +53,19 @@ const Messages = () => {
   window.addEventListener('load', handleLoad);
 
 
+
+
   
 
 
   useEffect(() => {
     handleLoad();
+    
   }, []);
 
+
   const ManageAccount = () => {
+    clearInterval()
     navigate('/ViewHistory');
   };
   
@@ -70,6 +77,7 @@ const Messages = () => {
       e.preventDefault();
       localStorage.setItem("email", "");
       localStorage.setItem("user", "");
+      clearInterval()
       navigate('/');
     };
 
@@ -107,7 +115,7 @@ const Messages = () => {
           <span>Account</span>
         </div>
         <div className="nav-links">
-          <button className="logout-btn" onClick={ManageAccount}>{buttonText} || View Purchase History ||</button>
+          <button className="logout-btn" onClick={ManageAccount}>{buttonText} || View E-Commerce History ||</button>
           <button className="logout-btn" onClick={handleLogout}>Log Out || </button>
           <button className="logout-btn" onClick={handleBack}>Go Back ||</button>
         </div>
@@ -140,7 +148,7 @@ const Messages = () => {
 </div>
 
       <div style={{ display: "flex", flexDirection: "row" }}>
-        <div className="message-container">
+        <div className="message-container" style={{width:"100%"}}>
           <h1>Message Log</h1>
           {appState.objects.map((elements, index) => (
             <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>

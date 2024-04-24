@@ -34,7 +34,8 @@ const BuyItems = () => {
     
   const completePurchase = (_id) => {
     const buyer = localStorage.getItem("email")
-    axios.post('/api/buyItem', {_id, buyer})
+    const buyerName = localStorage.getItem("user")
+    axios.post('/api/buyItem', {_id, buyer, buyerName})
     .then((res) => {
       console.log(res)
       try{
