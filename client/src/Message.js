@@ -85,25 +85,39 @@ const Messages = () => {
         var user = localStorage.getItem("user")
         var email = localStorage.getItem("email")
         var rec = document.getElementById('A').value;
-        var mes = document.getElementById('B').value;;
-
-
+        var mes = document.getElementById('B').value;
+        document.getElementById('B').value = ""
+        console.log(mes.length)
+      if(mes.length > 0){
         axios.post('/api/sendMessage', {email, user, rec, mes})
       .then((res) => {
         if(res.data.response == "Message Sent"){
           console.log(res.data.info)
           var list = res.data.info.sort(function(a, b) {return parseFloat(b.sortBy) - parseFloat(a.sortBy);})
           console.log(list)
+          
           changeChange({ 
               objects : list
           })
           errorMessage("")
+          document.getElementById('errormes').innerHTML = "";
+          document.getElementById('B').value = ""
+          
         }
         else{
           console.log(res.data.response)
+          document.getElementById('errormes').innerHTML = res.data.response;
           errorMessage(res.data.response)
+          
         }
       })
+      }
+      else{
+        console.log("here")
+        document.getElementById('errormes').innerHTML = "Enter Message";
+        errorMessage("")
+        errorMessage("Enter message")
+      }
       };
   
       
@@ -136,7 +150,7 @@ const Messages = () => {
       placeholder="Enter Username"
     />
   </div>
-  {errorMes && <p className="error-message">User not found</p>} {/* Conditionally render error message */}
+  {errorMes && <p className="error-message"></p>} <div style={{color:"Red"}} id="errormes"></div> {/* Conditionally render error message */}
   <div style={{ marginBottom: "10px" }}>
     <label className="form-label">Message:</label>
     <textarea

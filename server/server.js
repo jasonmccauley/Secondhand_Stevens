@@ -122,9 +122,29 @@ app.post('/api/sendMessage', (req, res) => {
       const databaseFrom = new Datastore("accounts/" + email + "/mes.db")
       databaseFrom.loadDatabase();
       databaseFrom.insert({sortBy:d.getTime(), mes: mes, from:user, to:rec, time:d})
-      databaseFrom.find({},function(err,output){
-        res.json({ response: "Message Sent", info:output});
-      })
+      
+  var content = 0
+  databaseFrom.find({},function(err,outputTwo){
+    content = outputTwo.length + 1
+    
+    fs.writeFile("accounts/" + email + "/count.txt", content.toString(), err => {
+      if (err) {
+        res.json({response: "File does not exist"});
+      } else {
+        try{
+            databaseFrom.find({},function(err,outputThree){
+              res.json({ response: "Message Sent", info:outputThree});
+            })
+        }
+        catch{
+          res.json({response: "File does not exist"})
+        }
+        
+      }
+    });
+
+
+  })
       
     }
     else{
@@ -313,11 +333,30 @@ app.post('/api/checkNot', (req, res) => {
         }
         
         
-        if(replace== content){
-          res.json({response:  user})
+        if(replace >= content){
+          console.log(replace)
+          console.log(content)
+
+          fs.writeFile("accounts/" + email + "/count.txt", content.toString(), err => {
+            if (err) {
+              res.json({response: "File does not exist"});
+            } else {
+              res.json({response:  user})
+            }
+          });
+          
+
+          
         }
         else{
-          res.json({response:  user + " || " + (content - replace) + " New Messages"})
+          if(content - replace < 0){
+            res.json({response:  user})
+          }
+          else{
+            res.json({response:  user + " || " + (content - replace) + " New Messages"})
+          }
+          
+          
         }
       });
     }
