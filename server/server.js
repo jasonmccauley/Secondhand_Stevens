@@ -236,7 +236,7 @@ app.post('/api/buyItem', (req, res) => {
       name = output[0]["username"]
       const databaseRec = new Datastore("accounts/" + email + "/mes.db")
       databaseRec.loadDatabase();
-      databaseRec.insert({sortBy:d.getTime(), mes: "Your " + itemName + " was Purchased by" + buyerName + ". The amount of " + amount + "$ will be deposited within 3-5 buisness days", from:"Second Hand Stevens", to:name, time:d})
+      databaseRec.insert({sortBy:d.getTime(), mes: "Your " + itemName + " was Purchased by " + buyerName + ". The amount of " + amount + "$ will be deposited within 3-5 buisness days", from:"Second Hand Stevens", to:name, time:d})
 
     })
 

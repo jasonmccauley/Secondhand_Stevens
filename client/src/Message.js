@@ -115,7 +115,7 @@ const Messages = () => {
           <span>Account</span>
         </div>
         <div className="nav-links">
-          <button className="logout-btn" onClick={ManageAccount}>{buttonText} || View E-Commerce History ||</button>
+          <button className="logout-btn" onClick={ManageAccount}>{buttonText} || View Transaction History ||</button>
           <button className="logout-btn" onClick={handleLogout}>Log Out || </button>
           <button className="logout-btn" onClick={handleBack}>Go Back ||</button>
         </div>
