@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, createSearchParams } from 'react-router-dom';
 import axios from 'axios';
-import './styles/viewItem.css'; // Import CSS file for BuyItems page
+import '../styles/viewItem.css'; // Import CSS file for BuyItems page
 
 const BuyItems = () => {
   

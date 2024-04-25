@@ -4,22 +4,20 @@ import axios from 'axios';
 import {BrowserRouter, Routes, Route, Link} from "react-router-dom"
 
 
-import Home from "./Home"
+import Home from "./pages/Home";
 
-import About from "./About";
+import CreateAccount from "./pages/CreateAccount";
 
-import CreateAccount from "./CreateAccount";
+import Landing from "./pages/Landing";
 
-import Landing from "./Landing";
+import BuyItems from "./pages/BuyItems";
+import SellItems from './pages/SellItems';
 
-import BuyItems from "./BuyItems";
-import SellItems from './SellItems';
+import ViewItem from './pages/viewItem';
 
-import ViewItem from './viewItem';
+import ViewHistoryBuy from './pages/viewHistoryBuy';
 
-import ViewHistoryBuy from './viewHistoryBuy';
-
-import Messages from './Message';
+import Messages from './pages/Message';
 
 function App() {
   
@@ -138,7 +136,6 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route index element=<Home /> />
-      <Route path="/About" element={<About/>}>  </Route>
       <Route path="/CreateAccount" element={<CreateAccount/>}>  </Route>
       <Route path="/Landing" element={<Landing/>}>  </Route>
       <Route path="/ViewItem" element={<ViewItem/>}>  </Route>

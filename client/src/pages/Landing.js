@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {BrowserRouter, Routes, Route, Link} from "react-router-dom"
-import './styles/landing.css'; // Import CSS file from styles folder
+import '../styles/landing.css'; // Import CSS file from styles folder
 
 const Landing = () => {
 

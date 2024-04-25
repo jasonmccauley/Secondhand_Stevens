@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import {Dimensions} from 'react-native';
 import axios from 'axios';
 import {BrowserRouter, Routes, Route, Link} from "react-router-dom"
-import './styles/viewHistoryBuy.css'; // Import CSS file from styles folder
+import '../styles/viewHistoryBuy.css'; // Import CSS file from styles folder
 
 const Landing = () => {
 

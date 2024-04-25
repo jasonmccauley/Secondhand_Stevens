@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 
-import './styles/sellItems.css';
+import '../styles/sellItems.css';
 
 const SellItems = () => {
 

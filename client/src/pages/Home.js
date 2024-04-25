@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import './styles/login.css'; // Import CSS file from styles folder
+import '../styles/login.css'; // Import CSS file from styles folder
 import {BrowserRouter, Routes, Route, Link} from "react-router-dom"
-import myImage from './image.png';
+import myImage from '../image.png';
 import axios from 'axios';
 import CreateAccount from './CreateAccount';
 import { useNavigate } from 'react-router-dom';
