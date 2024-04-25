@@ -5,7 +5,7 @@ import './styles/createAccount.css'; // Import CSS file from styles folder
 
 function CreateAccount() {
     const navigate = useNavigate();
-
+// Handle Sign up page
   const HandleSignUp = (e) => {
     e.preventDefault();
     const username = document.getElementById('usernameBox').value;
